@@ -7,8 +7,26 @@
   </parent>
   <groupId>security</groupId>
   <artifactId>org.eclipse.core.pki</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   
+  <build>
+	<plugins>
+		<plugin>
+        <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-packaging-plugin</artifactId>
+             <version>${tycho.version}</version>
+             <executions>
+              <execution>
+                <phase>package</phase>
+                <id>package-feature</id>
+                    <configuration>
+                        <finalName>${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
+                    </configuration>
+            </execution>
+        </executions>
+    </plugin>
+	</plugins>
+  </build>
   
 </project>
