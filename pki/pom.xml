@@ -1,50 +1,61 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.eclipse</groupId>
-  <artifactId>marketplacepki</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse</groupId>
+	<artifactId>marketplacepki</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
 		<tycho.version>4.0.7</tycho.version>
+		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<maven.compiler.release>18</maven.compiler.release>
 		<eclipse-version>2024-03</eclipse-version>
 		<eclipse.repo>https://download.eclipse.org/releases/${eclipse-version}</eclipse.repo>
-  </properties>
-  <repositories>
-    <repository>
-      <id>eclipse</id>
-      <url>${eclipse.repo}</url>
-      <layout>p2</layout>
-    </repository>
-  </repositories>
-  <build>
-	<pluginManagement>
-     <plugins>
-       <plugin>
-         <groupId>org.eclipse.tycho</groupId>
-         <artifactId>tycho-p2-director-plugin</artifactId>
-         <version>${tycho.version}</version>
-       </plugin>
-     </plugins>
-   </pluginManagement>
-	<plugins>
-		 <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>${tycho.version}</version>
-        <extensions>true</extensions>
-      </plugin>
-      
-		
-	</plugins>
-  </build>
- 
-  
-  <packaging>pom</packaging>
-  <modules>
-	<module>org.eclipse.core.pki</module>
-  </modules>
-  <dependencies>
-	
-  </dependencies>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+
+	</properties>
+	<repositories>
+		<repository>
+			<id>eclipse</id>
+			<url>${eclipse.repo}</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+		          	<groupId>org.eclipse.tycho</groupId>
+		          	<artifactId>tycho-versions-plugin</artifactId>
+		          	<version>${tycho.version}</version>
+		        </plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-director-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+
+		</plugins>
+	</build>
+
+
+	<packaging>pom</packaging>
+	<modules>
+		<module>org.eclipse.core.pki</module>
+		<module>updatesite</module>
+	</modules>
+	<dependencies>
+
+	</dependencies>
 </project>

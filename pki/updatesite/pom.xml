@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.eclipse</groupId>
+    <artifactId>marketplacepki</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>updatesite</artifactId>
+  
+  	<properties>
+		<maven.compiler.source>18</maven.compiler.source>
+		<maven.compiler.target>18</maven.compiler.target>
+
+
+		<tycho.version>4.0.7</tycho.version>
+		<tycho.extras.version>3.0.4</tycho.extras.version>
+		<repository.location>target/repository</repository.location>
+		<repositoiry.url>repository</repositoiry.url>
+		<repository.layout>p2</repository.layout>
+		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
+		<releaseVersion>1.0.0</releaseVersion>
+		<qualifier>-SNAPSHOT</qualifier>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<verbose>true</verbose>
+					<useJDK>BREE</useJDK>
+
+					<verbose>true</verbose>
+					<source>18</source>
+					<target>18</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-bundles-for-publishing</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>security</groupId>
+									<artifactId>org.eclipse.core.pki</artifactId>
+									<version>1.0.1</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>com.daggerpoint</groupId>
+									<artifactId>EdgeWar</artifactId>
+									<version>1.0.0</version>
+									<type>war</type>
+									<destFileName>com.daggerpoint.EdgeWar.1.0.0</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>target/repository/plugins</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>
