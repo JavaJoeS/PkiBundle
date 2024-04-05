@@ -8,6 +8,9 @@
 
 	<properties>
 		<tycho.version>4.0.7</tycho.version>
+		
+		<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
+		<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<maven.compiler.release>18</maven.compiler.release>
 		<eclipse-version>2024-03</eclipse-version>
@@ -15,6 +18,7 @@
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 
 	</properties>
+	
 	<repositories>
 		<repository>
 			<id>eclipse</id>
@@ -44,7 +48,7 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-
+			
 
 		</plugins>
 	</build>
@@ -53,7 +57,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.eclipse.core.pki</module>
-		<module>updatesite</module>
+		<module>org.eclipse.core.pki.feature</module>
+		<module>org.eclipse.updatesite</module>
 	</modules>
 	<dependencies>
 
