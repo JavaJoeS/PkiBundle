@@ -8,7 +8,41 @@
   <groupId>org.eclipse.core.pki.feature</groupId>
   <artifactId>org.eclipse.core.pki.feature</artifactId>
   <version>1.0.1-SNAPSHOT</version>
-  
   <packaging>eclipse-feature</packaging>
+   
+  <properties>
+	<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
+
+	<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>
+	<tycho.version>4.0.7</tycho.version>
+  </properties>
+  
+  <repositories> 
+        <repository>
+            <id>localREPOid</id>
+            <name>RepositoryPro</name>
+            <url>file://${p2.repository}</url>
+        </repository>
+   </repositories>     
+   
+ 
+  <build>
+	<plugins>
+			<plugin>
+			  <groupId>org.eclipse.tycho</groupId>
+			  <artifactId>p2-maven-plugin</artifactId>
+			  <version>${tycho.version}</version>
+			  <extensions>true</extensions>
+			</plugin>
+           
+        </plugins>
+  </build>
+  <dependencies>
+	<dependency>
+		<groupId>security</groupId>
+		<artifactId>org.eclipse.core.pki</artifactId>
+		<version>1.0.1</version>
+	</dependency>
+  </dependencies>
   
 </project>
