@@ -62,11 +62,9 @@
 									<version>1.0.1${qualifier}</version>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.daggerpoint</groupId>
-									<artifactId>EdgeWar</artifactId>
-									<version>1.0.0</version>
-									<type>war</type>
-									<destFileName>com.daggerpoint.EdgeWar.1.0.0</destFileName>
+									<groupId>security</groupId>
+									<artifactId>org.eclipse.ui.pki</artifactId>
+									<version>1.0.1${qualifier}</version>
 								</artifactItem>
 							</artifactItems>
 							<outputDirectory>target/repository/plugins</outputDirectory>

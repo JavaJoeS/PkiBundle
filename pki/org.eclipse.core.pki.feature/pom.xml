@@ -43,6 +43,11 @@
 		<artifactId>org.eclipse.core.pki</artifactId>
 		<version>1.0.1</version>
 	</dependency>
+	<dependency>
+		<groupId>security</groupId>
+		<artifactId>org.eclipse.ui.pki</artifactId>
+		<version>1.0.0</version>
+	</dependency>
   </dependencies>
   
 </project>
