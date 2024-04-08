@@ -1,13 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.eclipse</groupId>
-    <artifactId>marketplacepki</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>updatesite</artifactId>
-  
-  	<properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse</groupId>
+		<artifactId>marketplacepki</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>updatesite</artifactId>
+
+	<properties>
 		<maven.compiler.source>18</maven.compiler.source>
 		<maven.compiler.target>18</maven.compiler.target>
 
@@ -27,14 +29,14 @@
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 	</properties>
 	<distributionManagement>
-       
-        <repository>
-            <id>localREPOid</id>
-            <name>RepositoryPro</name>
-            <url>file://${p2.repository}</url>
-        </repository>
-       
-    </distributionManagement>
+
+		<repository>
+			<id>localREPOid</id>
+			<name>RepositoryPro</name>
+			<url>file://${p2.repository}</url>
+		</repository>
+
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -44,7 +46,7 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
@@ -55,6 +57,7 @@
 							<goal>copy</goal>
 						</goals>
 						<configuration>
+							
 							<artifactItems>
 								<artifactItem>
 									<groupId>security</groupId>
@@ -69,64 +72,119 @@
 							</artifactItems>
 							<outputDirectory>target/repository/plugins</outputDirectory>
 						</configuration>
+						
+					</execution>
+					<execution>
+						<id>copy-features-for-publishing</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							
+							<artifactItems>
+								<artifactItem>
+									<groupId>security</groupId>
+									<artifactId>org.eclipse.core.pki.feature</artifactId>
+									<version>1.0.1${qualifier}</version>
+								</artifactItem>
+								
+							</artifactItems>
+							<outputDirectory>target/repository/features</outputDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-			    <groupId>org.eclipse.tycho.extras</groupId>
-			    <artifactId>tycho-p2-extras-plugin</artifactId>
-			    <version>${tycho.version}</version>
-			    <executions>
-			        <execution>
-			            <phase>package</phase>
-			            <goals>
-			                <goal>publish-features-and-bundles</goal>
-			            </goals>
-			            <configuration>
-			                <append>true</append>
-			                <sourceLocation>${project.build.directory}/repository/plugins</sourceLocation>
-			                <metadataRepositoryLocation>${project.build.directory}/repository</metadataRepositoryLocation>
-			                <artifactRepositoryLocation>${project.build.directory}/repository</artifactRepositoryLocation>
-			            </configuration>
-			        </execution>
-			    </executions>
-		</plugin>
-		<plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-p2-repository-plugin</artifactId>
-            <version>${tycho.version}</version>
-            <configuration>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>verify-repository</goal>
-                        <goal>archive-repository</goal>
-                    </goals>
-                    <configuration>
-                        <compress>false</compress>
-                        <includeAllDependencies>true</includeAllDependencies>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-        <plugin>  
-          <groupId>org.eclipse.tycho</groupId>
-          <artifactId>tycho-p2-publisher-plugin</artifactId>
-          <version>${tycho.version}</version>
-          <configuration>
-            <publishArtifacts>true</publishArtifacts>
-          </configuration>
-        </plugin>
-        <plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>plugins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>publish-features-and-bundles</goal>
+						</goals>
+						<configuration>
+							<append>true</append>
+							
+							<sourceLocation>
+								${project.build.directory}/repository/plugins</sourceLocation>
+							<metadataRepositoryLocation>
+								${project.build.directory}/repository</metadataRepositoryLocation>
+							<artifactRepositoryLocation>
+								${project.build.directory}/repository</artifactRepositoryLocation>
+						</configuration>
+					</execution>
+					<execution>
+						<id>features</id>
+						<phase>package</phase>
+						<goals>
+							<goal>publish-features-and-bundles</goal>
+						</goals>
+						<configuration>
+							<append>true</append>
+							<sourceLocation>
+								${project.build.directory}/repository/features</sourceLocation>
+						</configuration>
+					</execution>	
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>verify-repository</goal>
+							<goal>archive-repository</goal>
+						</goals>
+						<configuration>
+							<compress>false</compress>
+							<includeAllDependencies>true</includeAllDependencies>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-publisher-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<publishArtifacts>true</publishArtifacts>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
 					<target>
 						<file>${p2.repository}</file>
 					</target>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.core.pki.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>

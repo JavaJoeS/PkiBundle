@@ -5,14 +5,13 @@
     <artifactId>marketplacepki</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>org.eclipse.core.pki.feature</groupId>
+  <groupId>security</groupId>
   <artifactId>org.eclipse.core.pki.feature</artifactId>
   <version>1.0.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
    
   <properties>
 	<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
-
 	<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>
 	<tycho.version>4.0.7</tycho.version>
   </properties>
@@ -22,20 +21,52 @@
             <id>localREPOid</id>
             <name>RepositoryPro</name>
             <url>file://${p2.repository}</url>
+            <layout>p2</layout>
         </repository>
    </repositories>     
    
  
   <build>
 	<plugins>
-			<plugin>
-			  <groupId>org.eclipse.tycho</groupId>
-			  <artifactId>p2-maven-plugin</artifactId>
-			  <version>${tycho.version}</version>
-			  <extensions>true</extensions>
+		<plugin>
+	        <groupId>org.eclipse.tycho</groupId>
+	        <artifactId>tycho-maven-plugin</artifactId>
+	        <version>${tycho.version}</version>
+	        <extensions>true</extensions>
+		</plugin>
+		<plugin>
+		  <groupId>org.eclipse.tycho</groupId>
+		  <artifactId>p2-maven-plugin</artifactId>
+		  <version>${tycho.version}</version>
+		  <extensions>true</extensions>
+		</plugin>
+		<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-bundles-for-publishing</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							
+							<artifactItems>
+								<artifactItem>
+									<groupId>security</groupId>
+									<artifactId>org.eclipse.core.pki.feature</artifactId>
+									<version>1.0.1-SNAPSHOT</version>
+								</artifactItem>
+								
+							</artifactItems>
+							<outputDirectory>${p2.repository}/features</outputDirectory>
+						</configuration>
+						
+					</execution>
+				</executions>
 			</plugin>
-           
-        </plugins>
+       
+    </plugins>
   </build>
   <dependencies>
 	<dependency>
