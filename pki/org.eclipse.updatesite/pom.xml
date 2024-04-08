@@ -46,26 +46,28 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<executions>
-				    <execution>
-				      <phase>validate</phase>
-				      <goals>
-						<goal>build-qualifier</goal>
-				      </goals>
-				      <configuration>
-						  <timestampProvider>default</timestampProvider>      
-				      </configuration>
-				    </execution>
-			  </executions>
-			   <configuration>
-				   <strictVersions>false</strictVersions>
-				   <timestampProvider>default</timestampProvider>
-				   <format>${tycho.buildqualifier.format}</format>
-				   <finalName>${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>build-qualifier</goal>
+						</goals>
+						<configuration>
+							<timestampProvider>default</timestampProvider>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<strictVersions>false</strictVersions>
+					<timestampProvider>default</timestampProvider>
+					<format>${tycho.buildqualifier.format}</format>
+					<finalName>
+						${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -78,7 +80,7 @@
 							<goal>copy</goal>
 						</goals>
 						<configuration>
-							
+
 							<artifactItems>
 								<artifactItem>
 									<groupId>security</groupId>
@@ -93,7 +95,7 @@
 							</artifactItems>
 							<outputDirectory>target/repository/plugins</outputDirectory>
 						</configuration>
-						
+
 					</execution>
 					<execution>
 						<id>copy-features-for-publishing</id>
@@ -102,19 +104,36 @@
 							<goal>copy</goal>
 						</goals>
 						<configuration>
-							
+
 							<artifactItems>
 								<artifactItem>
 									<groupId>security</groupId>
 									<artifactId>org.eclipse.core.pki.feature</artifactId>
 									<version>1.0.1${qualifier}</version>
 								</artifactItem>
-								
+
 							</artifactItems>
 							<outputDirectory>target/repository/features</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>category-p2-metadata</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<target>${basedir}/target/repository</target>
+					<categoryDefinition>${basedir}/category.xml</categoryDefinition>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
@@ -129,7 +148,7 @@
 						</goals>
 						<configuration>
 							<append>true</append>
-							
+
 							<sourceLocation>
 								${project.build.directory}/repository/plugins</sourceLocation>
 							<metadataRepositoryLocation>
@@ -149,7 +168,7 @@
 							<sourceLocation>
 								${project.build.directory}/repository/features</sourceLocation>
 						</configuration>
-					</execution>	
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>

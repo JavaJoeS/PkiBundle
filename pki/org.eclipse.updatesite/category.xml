@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<site>
+ 	<bundle id="org.eclipse.core.pki" version="0.0.0">
+      <category name="all"/>
+   </bundle>
+    <category-def name="all" label="Maven osgi-bundles"/>
+</site>
