@@ -58,6 +58,8 @@
 						<phase>package</phase>
 						<id>package-feature</id>
 						<configuration>
+							<strictBinIncludes>false</strictBinIncludes>
+							<format>${tycho.buildqualifier.format}</format>
 							<finalName>
 								${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
 						</configuration>
