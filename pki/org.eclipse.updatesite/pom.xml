@@ -24,7 +24,7 @@
 		<repository.layout>p2</repository.layout>
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<releaseVersion>1.0.0</releaseVersion>
-		<qualifier>-${buildQualifier}</qualifier>
+		<qualifier>-SNAPSHOT</qualifier>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 	</properties>
@@ -73,30 +73,7 @@
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
-					<execution>
-						<id>copy-bundles-for-publishing</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-
-							<artifactItems>
-								<artifactItem>
-									<groupId>security</groupId>
-									<artifactId>org.eclipse.core.pki</artifactId>
-									<version>1.0.1${qualifier}</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>security</groupId>
-									<artifactId>org.eclipse.ui.pki</artifactId>
-									<version>1.0.1${qualifier}</version>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>target/repository/plugins</outputDirectory>
-						</configuration>
-
-					</execution>
+					
 					<execution>
 						<id>copy-features-for-publishing</id>
 						<phase>process-resources</phase>
