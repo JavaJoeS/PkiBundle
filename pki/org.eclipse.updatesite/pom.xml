@@ -22,6 +22,7 @@
 		<repository.location>../pki/org.eclipse.core.pki/target/repository</repository.location>
 		<repositoiry.url>repository</repositoiry.url>
 		<repository.layout>p2</repository.layout>
+		<featureDirectory>../org.eclipse.core.pki.feature</featureDirectory>
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<releaseVersion>1.0.0</releaseVersion>
 		<qualifier>-SNAPSHOT</qualifier>
@@ -71,26 +72,43 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>				
 					<execution>
-						<id>copy-features-for-publishing</id>
-						<phase>process-resources</phase>
+						<id>copy-feature</id>
+						<phase>verify</phase>
 						<goals>
-							<goal>copy</goal>
+							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-
-							<artifactItems>
-								<artifactItem>
-									<groupId>security</groupId>
-									<artifactId>org.eclipse.core.pki.feature</artifactId>
-									<version>1.0.1${qualifier}</version>
-								</artifactItem>
-
-							</artifactItems>
+							<resources>
+                    			<resource>
+									<directory>${featureDirectory}/target</directory>
+									<includes>
+										<include>org.eclipse.core.pki.feature*.jar</include>
+									</includes>
+								</resource>
+							</resources>
 							<outputDirectory>target/repository/features</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-p2-files</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+                    			<resource>
+									<directory>${featureDirectory}/target</directory>
+									<includes>
+										<include>p2*.xml</include>
+									</includes>
+								</resource>
+							</resources>
+							<outputDirectory>target/repository</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -134,7 +152,7 @@
 								${project.build.directory}/repository</artifactRepositoryLocation>
 						</configuration>
 					</execution>
-					<execution>
+					<!--<execution>
 						<id>features</id>
 						<phase>package</phase>
 						<goals>
@@ -145,7 +163,7 @@
 							<sourceLocation>
 								${project.build.directory}/repository/features</sourceLocation>
 						</configuration>
-					</execution>
+					</execution>-->
 				</executions>
 			</plugin>
 			<plugin>

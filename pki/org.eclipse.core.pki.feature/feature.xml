@@ -33,4 +33,5 @@
    <provider-name>
    	  Delmarva Security
    </provider-name>
+   <plugin id="org.eclipse.core.pki" version="1.0.1.qualifier"/>
 </feature>

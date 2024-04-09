@@ -40,36 +40,36 @@
 		  <version>${tycho.version}</version>
 		  <extensions>true</extensions>
 		</plugin>
-		<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-bundles-for-publishing</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
+<!--		<plugin>-->
+<!--				<artifactId>maven-dependency-plugin</artifactId>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>copy-bundles-for-publishing</id>-->
+<!--						<phase>process-resources</phase>-->
+<!--						<goals>-->
+<!--							<goal>copy</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
 							
-							<artifactItems>
-								<artifactItem>
-									<groupId>security</groupId>
-									<artifactId>org.eclipse.core.pki.feature</artifactId>
-									<version>1.0.1-SNAPSHOT</version>
-								</artifactItem>
+<!--							<artifactItems>-->
+<!--								<artifactItem>-->
+<!--									<groupId>security</groupId>-->
+<!--									<artifactId>org.eclipse.core.pki.feature</artifactId>-->
+<!--									<version>1.0.1-SNAPSHOT</version>-->
+<!--								</artifactItem>-->
 								
-							</artifactItems>
-							<outputDirectory>${p2.repository}/features</outputDirectory>
-						</configuration>
+<!--							</artifactItems>-->
+<!--							<outputDirectory>${p2.repository}/features</outputDirectory>-->
+<!--						</configuration>-->
 						
-					</execution>
-				</executions>
-			</plugin>
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
        
     </plugins>
   </build>
   <dependencies>
-	<dependency>
+	<!--<dependency>
 		<groupId>security</groupId>
 		<artifactId>org.eclipse.core.pki</artifactId>
 		<version>1.0.1</version>
@@ -78,7 +78,7 @@
 		<groupId>security</groupId>
 		<artifactId>org.eclipse.ui.pki</artifactId>
 		<version>1.0.0</version>
-	</dependency>
+	</dependency>-->
   </dependencies>
   
 </project>
