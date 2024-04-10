@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <site>
- 	<bundle id="org.eclipse.core.pki" version="0.0.0">
-      <category name="all"/>
-   </bundle>
-    <category-def name="all" label="Maven osgi-bundles"/>
+   <feature url="features/org.eclipse.core.pki.features_1.0.0.qualifier.jar" id="org.eclipse.core.pki.feature" version="1.0.0.qualifier">
+      <category name="PKI Security Feature"/>
+   </feature>
+   <category-def name="pkisecurity" label="PKI Security Plugin Feature"/>
+   <repository-reference location="https://javajoes.github.io/about/p2site" name="PKI Security Update Site" enabled="false" />
 </site>

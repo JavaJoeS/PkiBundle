@@ -34,7 +34,8 @@
 		<repository>
 			<id>localREPOid</id>
 			<name>RepositoryPro</name>
-			<url>file://${p2.repository}</url>
+			<!--<url>file://${p2.repository}</url>-->
+			<url>UPDATE SITE</url>
 		</repository>
 
 	</distributionManagement>
@@ -152,18 +153,6 @@
 								${project.build.directory}/repository</artifactRepositoryLocation>
 						</configuration>
 					</execution>
-					<!--<execution>
-						<id>features</id>
-						<phase>package</phase>
-						<goals>
-							<goal>publish-features-and-bundles</goal>
-						</goals>
-						<configuration>
-							<append>true</append>
-							<sourceLocation>
-								${project.build.directory}/repository/features</sourceLocation>
-						</configuration>
-					</execution>-->
 				</executions>
 			</plugin>
 			<plugin>
@@ -179,10 +168,6 @@
 							<goal>verify-repository</goal>
 							<goal>archive-repository</goal>
 						</goals>
-						<configuration>
-							<compress>false</compress>
-							<includeAllDependencies>true</includeAllDependencies>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -190,11 +175,8 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
 				<version>${tycho.version}</version>
-				<configuration>
-					<publishArtifacts>true</publishArtifacts>
-				</configuration>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
@@ -211,7 +193,7 @@
 						<file>${p2.repository}</file>
 					</target>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 
 	</build>
