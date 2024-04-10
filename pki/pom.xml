@@ -10,7 +10,7 @@
 		<tycho.version>4.0.7</tycho.version>
 
 		<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
-		<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>
+		<!--<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>-->
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<maven.compiler.release>18</maven.compiler.release>
 		<eclipse-version>2024-03</eclipse-version>

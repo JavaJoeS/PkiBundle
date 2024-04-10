@@ -13,7 +13,7 @@
 	<packaging>eclipse-plugin</packaging>
 	<properties>
 		<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
-		<siteDir>../org.eclipse.updatesite/target/repository/plugins</siteDir>
+		<!--<siteDir>../org.eclipse.updatesite/target/repository/plugins</siteDir>-->
 	</properties>
 
 	<build>
@@ -61,7 +61,7 @@
 				   <timestampProvider>default</timestampProvider>
 				   <format>${tycho.buildqualifier.format}</format>
 				   <finalName>${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
-				   <buildDirectory>${siteDir}</buildDirectory>
+				  <!-- <buildDirectory>${siteDir}</buildDirectory>-->
 				</configuration>
 			</plugin>
 			<plugin>  
