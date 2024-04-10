@@ -123,12 +123,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!--<module>bundles</module>-->
 		<module>org.eclipse.core.pki</module>
 		<module>org.eclipse.ui.pki</module>
 		<module>features</module>
 		<module>p2site</module>
-		<!--<module>org.eclipse.updatesite</module>-->
 	</modules>
 
 </project>
