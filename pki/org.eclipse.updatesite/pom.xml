@@ -22,7 +22,7 @@
 		<repository.location>../pki/org.eclipse.core.pki/target/repository</repository.location>
 		<repositoiry.url>repository</repositoiry.url>
 		<repository.layout>p2</repository.layout>
-		<featureDirectory>../org.eclipse.core.pki.feature</featureDirectory>
+		<featureDirectory>../features/org.eclipse.core.pki.feature</featureDirectory>
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<releaseVersion>1.0.0</releaseVersion>
 		<qualifier>-SNAPSHOT</qualifier>
@@ -103,9 +103,9 @@
 						<configuration>
 							<resources>
                     			<resource>
-									<directory>${featureDirectory}/target</directory>
+									<directory>${featureDirectory}</directory>
 									<includes>
-										<include>p2*.xml</include>
+										<include>p2.index</include>
 									</includes>
 								</resource>
 							</resources>

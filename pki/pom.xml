@@ -126,7 +126,7 @@
 		<!--<module>bundles</module>-->
 		<module>org.eclipse.core.pki</module>
 		<module>org.eclipse.ui.pki</module>
-		<module>org.eclipse.core.pki.feature</module>
+		<module>features</module>
 		<module>org.eclipse.updatesite</module>
 	</modules>
 
