@@ -123,8 +123,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>org.eclipse.core.pki</module>
-		<module>org.eclipse.ui.pki</module>
+		<module>bundles</module>
+		<!--<module>org.eclipse.ui.pki</module>-->
 		<module>features</module>
 		<module>p2site</module>
 	</modules>

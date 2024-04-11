@@ -2,14 +2,11 @@
 <feature
       id="org.eclipse.core.pki.feature"
       label="PKI Plug-In Security Feature"
-      version="1.0.0">
+      version="1.0.0.qualifier">
 
    <description>
       PKI Security Features for core and UI
    </description>
-   <label>
-   	PKI Security
-   </label>
 
    <copyright>
       Copyright (c) 2023 Eclipse Platform, Delmarva Security Group and others.
@@ -35,12 +32,8 @@
    
    <plugin 
    		id="org.eclipse.core.pki"
-   		download-size="0"
-        install-size="0"
    		version="1.0.1.qualifier"/>
-   <plugin 
-   		id="org.eclipse.ui.pki"
-   		download-size="0"
-        install-size="0" 
-   		version="1.0.0.qualifier"/>
+   <!--<plugin 
+   		id="org.eclipse.ui.pki" 
+   		version="1.0.0.qualifier"/>-->
 </feature>
