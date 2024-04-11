@@ -32,8 +32,14 @@
    
    <plugin 
    		id="org.eclipse.core.pki"
-   		version="1.0.1.qualifier"/>
-   <!--<plugin 
-   		id="org.eclipse.ui.pki" 
-   		version="1.0.0.qualifier"/>-->
+   		download-size="0"
+        install-size="0"
+   		version="0.0.0"
+   		unpack="false"/>
+   <plugin 
+   		id="org.eclipse.ui.pki"
+   		download-size="0"
+        install-size="0"
+   		version="0.0.0"
+   		unpack="false"/>
 </feature>
