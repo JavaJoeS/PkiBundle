@@ -9,4 +9,28 @@
 	<artifactId>org.eclipse.core.pki.update</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
+	<!--<build>
+		<plugins>
+			<plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-repository-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <executions>
+          <execution>
+            <id>maven-p2-site</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>assemble-maven-repository</goal>
+            </goals>
+            <configuration>
+              <includeReactor>true</includeReactor>
+              <includeDependencies>true</includeDependencies>
+              <includeTransitiveDependencies>true</includeTransitiveDependencies>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+		</plugins>
+	</build>-->
+	
 </project>
