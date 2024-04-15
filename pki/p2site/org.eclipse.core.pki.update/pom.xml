@@ -4,33 +4,153 @@
 	<parent>
 		<groupId>org.eclipse</groupId>
 		<artifactId>marketplacepki</artifactId>
-		<version>0.0.1-SNAPSHOT</version>	
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.eclipse.core.pki.update</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	<!--<packaging>pom</packaging>-->
 	<packaging>eclipse-repository</packaging>
-	<!--<build>
+	<properties>
+		<repo.location>${basedir}/target/repository</repo.location>
+	</properties>
+	<build>
 		<plugins>
 			<plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-p2-repository-plugin</artifactId>
-        <version>${tycho.version}</version>
-        <executions>
-          <execution>
-            <id>maven-p2-site</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>assemble-maven-repository</goal>
-            </goals>
-            <configuration>
-              <includeReactor>true</includeReactor>
-              <includeDependencies>true</includeDependencies>
-              <includeTransitiveDependencies>true</includeTransitiveDependencies>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-		</plugins>
-	</build>-->
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>maven-p2-site</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>assemble-maven-repository</goal>
+						</goals>
+						<configuration>
+							<includeReactor>true</includeReactor>
+							<includeDependencies>true</includeDependencies>
+							<includeTransitiveDependencies>false</includeTransitiveDependencies>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-product-distributions</id>
+						<goals>
+							<goal>materialize-products</goal>
+							<goal>archive-products</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<installFeatures>true</installFeatures>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>create-features</id>
+						<goals>
+							<goal>feature-p2-metadata</goal>
+							<goal>update-site-p2-metadata</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<generateP2Metadata>true</generateP2Metadata>
+					<target>target/repository/features</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>publish-features-and-bundles</goal>
+						</goals>
+						<configuration>
+							<compress>false</compress>
+							<artifactRepositoryLocation>${repo.location}/art</artifactRepositoryLocation>
+							<metadataRepositoryLocation>${repo.location}/meta</metadataRepositoryLocation>
+							<sourceLocation>${repo.location}</sourceLocation>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+
+					<execution>
+						<id>copy-plugins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>
+										../../bundles/org.eclipse.core.pki/target</directory>
+									<includes>
+										<include>*.jar</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>
+										../../bundles/org.eclipse.ui.pki/target</directory>
+									<includes>
+										<include>*.jar</include>
+									</includes>
+								</resource>
+							</resources>
+
+							<outputDirectory>
+								${project.build.directory}/repository/plugins</outputDirectory>
+						</configuration>
+					</execution>
+				
+					<execution>
+						<id>copy-features</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>
+										../../features/org.eclipse.core.pki.feature/target</directory>
+									<includes>
+										<include>*.jar</include>
+										<include>*.zip</include>
+									</includes>
+								</resource>
 	
+							</resources>
+	
+							<outputDirectory>
+								${project.build.directory}/repository/features</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
 </project>

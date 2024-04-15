@@ -13,18 +13,28 @@
 		<!--<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>-->
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<maven.compiler.release>18</maven.compiler.release>
-		<eclipse-version>2024-03</eclipse-version>
+		<eclipse-version>2024-06</eclipse-version>
 		<eclipse.repo>https://download.eclipse.org/releases/${eclipse-version}</eclipse.repo>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 
 	</properties>
 
 	<repositories>
+		<!-- <repository>
+		      <id>eclipse-project-updates</id>
+		      <layout>p2</layout>
+		      <url>https://download.eclipse.org/eclipse/updates/4.30</url>
+		</repository>-->
 		<repository>
+		      <id>eclipse-project-2024-06</id>
+		      <layout>p2</layout>
+		      <url>https://download.eclipse.org/releases/2024-06</url>
+		</repository>
+		<!--<repository>
 			<id>eclipse</id>
 			<url>${eclipse.repo}</url>
 			<layout>p2</layout>
-		</repository>
+		</repository>-->
 	</repositories>
 	<build>
 		<pluginManagement>
@@ -43,13 +53,13 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -58,6 +68,22 @@
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<id>package-feature</id>
+						<configuration>
+							<finalName>
+								${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!--<plugin>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-repository-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
@@ -65,7 +91,8 @@
 					<createArtifactRepository>true</createArtifactRepository>
 					<compress>true</compress>
 				</configuration>
-			</plugin>
+			</plugin>-->
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -107,7 +134,8 @@
 					</environments>
 				</configuration>
 			</plugin>
-			<plugin>
+
+			<!--<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tycho.version}</version>
@@ -123,7 +151,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 
