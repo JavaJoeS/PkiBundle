@@ -27,8 +27,8 @@
 							<goal>assemble-maven-repository</goal>
 						</goals>
 						<configuration>
-							<includeReactor>true</includeReactor>
-							<includeDependencies>true</includeDependencies>
+							<includeReactor>false</includeReactor>
+							<includeDependencies>false</includeDependencies>
 							<includeTransitiveDependencies>false</includeTransitiveDependencies>
 						</configuration>
 					</execution>
@@ -113,6 +113,13 @@
 								<resource>
 									<directory>
 										../../bundles/org.eclipse.ui.pki/target</directory>
+									<includes>
+										<include>*.jar</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>
+										../../bundles/org.eclipse.ui.pki/target/dependency</directory>
 									<includes>
 										<include>*.jar</include>
 									</includes>
