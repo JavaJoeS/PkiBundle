@@ -136,8 +136,8 @@
 									<directory>
 										../../features/org.eclipse.core.pki.feature/target</directory>
 									<includes>
-										<include>*.jar</include>
-										<include>*.zip</include>
+										<!--<include>*.jar</include>-->
+										<!--<include>*.zip</include>-->
 									</includes>
 								</resource>
 	

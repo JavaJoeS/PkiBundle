@@ -2,7 +2,8 @@
 <feature
       id="org.eclipse.core.pki.feature"
       label="PKI Plug-In Security Feature"
-      version="1.0.0.qualifier">
+      version="1.0.0.qualifier"
+      provider-name="Delmarva Security">
 
    <description>
       PKI Security Features for core and UI
@@ -26,20 +27,18 @@
       Eclipse Platform - initial API and implementation Delmarva Security
    </license>
 
-   <provider-name>
-   	  Delmarva Security
-   </provider-name>
-   
-   <plugin 
-   		id="org.eclipse.core.pki"
-   		download-size="0"
-        install-size="0"
-   		version="0.0.0"
-   		unpack="false"/>
-   <plugin 
-   		id="org.eclipse.ui.pki"
-   		download-size="0"
-        install-size="0"
-   		version="0.0.0"
-   		unpack="false"/>
+   <plugin
+         id="org.eclipse.core.pki"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.pki"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
