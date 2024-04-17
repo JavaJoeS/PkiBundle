@@ -55,7 +55,7 @@
 						<configuration>
 							<resolutionFuzziness>version</resolutionFuzziness>
 							<includes>
-								<include>com.daggerpoint</include>
+								<include>org.eclipse.osgi</include>
 							</includes>
 						</configuration>
 					</execution>
@@ -86,13 +86,7 @@
 							<type>jar</type>
 							<destFileName>org.eclipse.osgi.services_3.12.100.v20240327-0645.jar</destFileName>
 						</artifactItem>
-						<artifactItem>
-							<groupId>com.daggerpoint</groupId>
-							<artifactId>EdgeWar</artifactId>
-							<version>1.0.0</version>
-							<type>war</type>
-							<destFileName>com.daggerpoint.EdgeWar.war.1.0.0</destFileName>
-						</artifactItem>
+						
 					</artifactItems>
 
 				</configuration>
