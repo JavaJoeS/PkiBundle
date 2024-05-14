@@ -17,7 +17,7 @@
 <plugin 
 	id="org.eclipse.core.pki.id" 
 	name="Eclipse Core PKI"
-    version="1.0.1.qualifier">	
+    version="1.0.2.qualifier">	
 	<extension point="org.eclipse.ui.startup">
 		<startup class="org.eclipse.core.pki.auth.PKISetup"/>
 	</extension>

@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>security</groupId>
 	<artifactId>org.eclipse.core.pki</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<properties>
 		 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
