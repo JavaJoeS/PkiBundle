@@ -314,7 +314,7 @@ public enum KeyStoreManager implements X509KeyManager {
 						x509.checkValidity();
 						if (!(isKeyEncipherment(x509.getKeyUsage()))) {
 							// selectedAlias=alias;
-							fingerprint = FingerprintX509.INSTANCE.getFingerPrint(x509, "MD5"); //$NON-NLS-1$
+							fingerprint = FingerprintX509.INSTANCE.getFingerPrint(x509, "SHA-256"); //$NON-NLS-1$
 							System.out.println("KeyManager -  SELECTED finger:" + getSelectedFingerprint()); //$NON-NLS-1$
 							// System.err.println("KeyManager - DUMP OUT DATA:"+info);
 
