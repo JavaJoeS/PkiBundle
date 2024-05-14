@@ -56,8 +56,12 @@ public enum KeyStoreManager implements X509KeyManager {
 		try {
 
 			try {
-				in = new FileInputStream(fileLocation);
-				in = new BufferedInputStream(in);
+				// NOT FIPS complient
+				//in = new FileInputStream(fileLocation);
+				//in = new BufferedInputStream(in);
+				
+				Path p = Paths.get(fileLocation);
+				in = Files.newInputStream(p);
 
 				keyStore = KeyStore.getInstance(format.getValue());
 				keyStore.load(in, password.toCharArray());
