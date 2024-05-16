@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.core.pki.feature"
       label="PKI Plug-In Security Feature"
-      version="1.0.0.qualifier"
+      version="1.0.2.qualifier"
       provider-name="Delmarva Security">
 
    <description>
@@ -29,15 +29,15 @@
 
    <plugin
          id="org.eclipse.core.pki"
-         download-size="0"
-         install-size="0"
+         download-size="79"
+         install-size="155"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.pki"
-         download-size="0"
-         install-size="0"
+         download-size="119"
+         install-size="230"
          version="0.0.0"
          unpack="false"/>
 

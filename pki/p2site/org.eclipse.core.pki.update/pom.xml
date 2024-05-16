@@ -79,9 +79,11 @@
 							<goal>publish-features-and-bundles</goal>
 						</goals>
 						<configuration>
-							<compress>false</compress>
-							<artifactRepositoryLocation>${repo.location}/art</artifactRepositoryLocation>
-							<metadataRepositoryLocation>${repo.location}/meta</metadataRepositoryLocation>
+							<publishArtifacts>true</publishArtifacts>
+							<append>true</append>
+							<compress>true</compress>
+							<artifactRepositoryLocation>${repo.location}</artifactRepositoryLocation>
+							<metadataRepositoryLocation>${repo.location}</metadataRepositoryLocation>
 							<sourceLocation>${repo.location}</sourceLocation>
 						</configuration>
 					</execution>

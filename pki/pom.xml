@@ -17,11 +17,11 @@
 		<eclipse.repo>https://download.eclipse.org/releases/${eclipse-version}</eclipse.repo>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 		
-		<commons.osgi.symbolicName>org.apache.commons.${commons.componentid}</commons.osgi.symbolicName>
+		<!--<commons.osgi.symbolicName>org.apache.commons.${commons.componentid}</commons.osgi.symbolicName>
         <commons.osgi.export>org.apache.commons.*;version=${project.version}</commons.osgi.export>
         <commons.osgi.import>*</commons.osgi.import>
         <commons.osgi.dynamicImport></commons.osgi.dynamicImport>
-        <commons.osgi.private></commons.osgi.private>
+        <commons.osgi.private></commons.osgi.private>-->
 
 	</properties>
 
