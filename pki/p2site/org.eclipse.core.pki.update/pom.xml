@@ -17,6 +17,24 @@
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-publisher-plugin</artifactId>
+				<version>${tycho.version}</version>
+
+				<executions>
+					<execution>
+						<id>publish-p2-site</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>publish-categories</goal>
+						</goals>
+						<configuration>
+							<categoriesDirectory>${project.basedir}</categoriesDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-repository-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<executions>
@@ -90,7 +108,7 @@
 				</executions>
 			</plugin>
 
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -119,11 +137,17 @@
 										<include>*.jar</include>
 									</includes>
 								</resource>
-								<resource>
+								<!--<resource>
 									<directory>
 										../../bundles/org.eclipse.ui.pki/target/dependency</directory>
 									<includes>
 										<include>*.jar</include>
+									</includes>
+								</resource>-->
+								<resource>
+									<directory>${project.basedir}</directory>
+									<includes>
+										<include>p2.index</include>
 									</includes>
 								</resource>
 							</resources>
@@ -132,7 +156,7 @@
 								${project.build.directory}/repository/plugins</outputDirectory>
 						</configuration>
 					</execution>
-				
+
 					<execution>
 						<id>copy-features</id>
 						<phase>package</phase>
@@ -149,16 +173,36 @@
 										<!--<include>*.zip</include>-->
 									</includes>
 								</resource>
-	
+
 							</resources>
-	
+
 							<outputDirectory>
 								${project.build.directory}/repository/features</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<id>rename-file</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>rename</goal>
+						</goals>
+						<!--<configuration>
+							<sourceFile>
+								${project.build.directory}/repository/p2.index
+							</sourceFile>
+							<destinationFile>
+								${project.build.directory}/repository/site.xml</destinationFile>
+						</configuration>-->
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
