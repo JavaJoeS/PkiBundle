@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.core.pki.feature"
-      label="PKI Plug-In Security Feature"
+      label="Eclipse Core PKI Security Resources"
       version="1.0.2.qualifier"
       provider-name="Delmarva Security">
 
