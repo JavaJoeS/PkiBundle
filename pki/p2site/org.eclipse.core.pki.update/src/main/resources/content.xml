@@ -2,7 +2,7 @@
 <?metadataRepository version='1.2.0'?>
 <repository name='org.eclipse.core.pki.update' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1716112088977'/>
+    <property name='p2.timestamp' value='${local.p2.timestamp}'/>
     <property name='p2.compressed' value='true'/>
   </properties>
   <references size='2'>

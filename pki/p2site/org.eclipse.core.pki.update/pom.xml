@@ -12,9 +12,41 @@
 	<packaging>eclipse-repository</packaging>
 	<properties>
 		<repo.location>${basedir}/target/repository</repo.location>
+		<local.uuid>${project.build.uuid}</local.uuid>
+		<local.p2.timestamp>${timestamp}</local.p2.timestamp>
 	</properties>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>us.springett</groupId>
+				<artifactId>maven-uuid-generator</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create-timestamp</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>true</doCheck>
+					<doUpdate>true</doUpdate>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
@@ -110,7 +142,7 @@
 				</executions>
 			</plugin>
 
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -182,7 +214,7 @@
 								${project.build.directory}/repository/features</outputDirectory>
 						</configuration>
 					</execution>
-					
+
 				</executions>
 			</plugin>
 			<plugin>
@@ -209,9 +241,9 @@
 		</plugins>
 		<resources>
 			<resource>
-        		<directory>src/main/resources</directory>
-        		<filtering>true</filtering>
-      		</resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
 		</resources>
 	</build>
 
