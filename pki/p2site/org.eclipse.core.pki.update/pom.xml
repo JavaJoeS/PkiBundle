@@ -133,7 +133,7 @@
 						<configuration>
 							<publishArtifacts>true</publishArtifacts>
 							<append>true</append>
-							<compress>true</compress>
+							<compress>false</compress>
 							<artifactRepositoryLocation>${repo.location}</artifactRepositoryLocation>
 							<metadataRepositoryLocation>${repo.location}</metadataRepositoryLocation>
 							<sourceLocation>${repo.location}</sourceLocation>
@@ -214,7 +214,28 @@
 								${project.build.directory}/repository/features</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>
+										${project.build.directory}/classes</directory>
+									<includes>
+										<include>*.xml</include>
+									</includes>
+								</resource>
 
+							</resources>
+
+							<outputDirectory>
+								${project.build.directory}/repository/</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -235,6 +256,68 @@
 							<destinationFile>
 								${project.build.directory}/repository/site.xml</destinationFile>
 						</configuration>-->
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.7.1</version>
+				<executions>
+					<execution>
+						<id>assembly</id>
+						<configuration>
+							<inlineDescriptors>
+								<inlineDescriptor>
+									<id>artifacts</id>
+									<formats>
+										<format>jar</format>
+									</formats>
+									<includeBaseDirectory>false</includeBaseDirectory>
+									<files>
+										<file>
+											<source>${project.build.outputDirectory}/artifacts.xml</source>
+											<outputDirectory>/</outputDirectory>
+											<destName>artifacts.xml</destName>
+										</file>
+									</files>
+								</inlineDescriptor>
+							</inlineDescriptors>
+							<finalName>artifacts</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>build-b</id>
+						<configuration>
+							<inlineDescriptors>
+								<inlineDescriptor>
+									<id>content</id>
+									<formats>
+										<format>jar</format>
+									</formats>
+									<includeBaseDirectory>false</includeBaseDirectory>
+									<files>
+										<file>
+											<source>${project.build.outputDirectory}/content.xml</source>
+											<destName>content.xml</destName>
+										</file>
+									</files>
+								</inlineDescriptor>
+							</inlineDescriptors>
+							<finalName>content</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+						
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

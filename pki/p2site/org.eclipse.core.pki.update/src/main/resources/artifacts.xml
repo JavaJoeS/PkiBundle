@@ -3,6 +3,7 @@
 <repository name='org.eclipse.core.pki.update' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
     <property name='p2.timestamp' value='${local.p2.timestamp}'/>
+    <property name='p2.uuid' value='${local.uuid}'/>
     <property name='p2.compressed' value='true'/>
   </properties>
   <mappings size='3'>
