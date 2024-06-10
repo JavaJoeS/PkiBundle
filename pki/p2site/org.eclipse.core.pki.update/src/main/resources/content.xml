@@ -3,7 +3,7 @@
 <repository name='org.eclipse.core.pki.update' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
   <properties size='2'>
     <property name='p2.timestamp' value='${local.p2.timestamp}'/>
-    <property name='p2.uuid' value='${local.uuid}'/>
+    <!--<property name='p2.uuid' value='${local.uuid}'/>-->
     <property name='p2.compressed' value='true'/>
   </properties>
   <references size='2'>
@@ -49,9 +49,6 @@
         Copyright (c) 2023 Eclipse Platform, Delmarva Security Group and others.
       </copyright>
     </unit>
-
-
-
     <unit id='org.eclipse.core.pki' version='1.0.2.${buildQualifier}' generation='2'>
     <update id='org.eclipse.core.pki' range='[0.0.0,1.0.2.${buildQualifier})' severity='0'/>
     <properties size='7'>
