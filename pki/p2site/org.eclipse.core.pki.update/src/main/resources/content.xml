@@ -7,8 +7,8 @@
     <property name='p2.compressed' value='true'/>
   </properties>
   <references size='2'>
-    <repository uri='https://javajoes.github.io/about/p2site' url='https://javajoes.github.io/about/p2site' type='0' options='0'/>
-    <repository uri='https://javajoes.github.io/about/p2site' url='https://javajoes.github.io/about/p2site' type='1' options='0'/>
+    <repository uri='${p2.repo.url}' url='${p2.repo.url}' type='0' options='0'/>
+    <repository uri='${p2.repo.url}' url='${p2.repo.url}' type='1' options='0'/>
   </references>
   <units size='3'>
     <unit id='org.eclipse.core.pki.feature.feature.jar' version='1.0.2.${buildQualifier}'>
@@ -111,24 +111,24 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='org.eclipse.ui.pki' version='1.0.0.${buildQualifier}' generation='2'>
-    <update id='org.eclipse.ui.pki' range='[0.0.0,1.0.0.${buildQualifier})' severity='0'/>
+  <unit id='org.eclipse.ui.pki' version='1.0.1.${buildQualifier}' generation='2'>
+    <update id='org.eclipse.ui.pki' range='[0.0.0,1.0.1.${buildQualifier})' severity='0'/>
     <properties size='6'>
       <property name='org.eclipse.equinox.p2.name' value='PkiUI'/>
       <property name='org.eclipse.equinox.p2.provider' value='Security Team'/>
       <property name='maven-groupId' value='security'/>
       <property name='maven-artifactId' value='org.eclipse.ui.pki'/>
-      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      <property name='maven-version' value='1.0.1-SNAPSHOT'/>
       <property name='maven-type' value='eclipse-plugin'/>
     </properties>
     <provides size='8'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki' version='1.0.0.${buildQualifier}'/>
-      <provided namespace='osgi.bundle' name='org.eclipse.ui.pki' version='1.0.0.${buildQualifier}'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki' version='1.0.1.${buildQualifier}'/>
+      <provided namespace='osgi.bundle' name='org.eclipse.ui.pki' version='1.0.1.${buildQualifier}'/>
       <provided namespace='java.package' name='org.eclipse.ui.pki.pkcs' version='0.0.0'/>
       <provided namespace='java.package' name='org.eclipse.ui.pki.pkiselection' version='0.0.0'/>
       <provided namespace='java.package' name='org.eclipse.ui.pki.preferences' version='0.0.0'/>
       <provided namespace='java.package' name='org.eclipse.ui.pki.util' version='0.0.0'/>
-      <provided namespace='osgi.identity' name='org.eclipse.ui.pki' version='1.0.0.${buildQualifier}'>
+      <provided namespace='osgi.identity' name='org.eclipse.ui.pki' version='1.0.1.${buildQualifier}'>
         <properties size='1'>
           <property name='type' value='osgi.bundle'/>
         </properties>
@@ -153,20 +153,20 @@
           org.eclipse.ui.pki
         </description>
       </requiredProperties>
-      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki.source' range='[1.0.0.${buildQualifier},1.0.0.${buildQualifier}]' optional='true'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki.source' range='[1.0.1.${buildQualifier},1.0.0.${buildQualifier}]' optional='true'>
         <filter>
           (org.eclipse.update.install.sources=true)
         </filter>
       </required>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='org.eclipse.ui.pki' version='1.0.0.${buildQualifier}'/>
+      <artifact classifier='osgi.bundle' id='org.eclipse.ui.pki' version='1.0.1.${buildQualifier}'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: org.eclipse.ui.pki;singleton:=true&#xA;Bundle-Version: 1.0.0.${buildQualifier}&#xA;
+          Bundle-SymbolicName: org.eclipse.ui.pki;singleton:=true&#xA;Bundle-Version: 1.0.1.${buildQualifier}&#xA;
         </instruction>
       </instructions>
     </touchpointData>
