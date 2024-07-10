@@ -6,17 +6,23 @@
 		<artifactId>marketplacepki</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<groupId>org.eclipse</groupId>
 	<artifactId>org.eclipse.core.pki.update</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<!--<packaging>pom</packaging>-->
 	<packaging>eclipse-repository</packaging>
 	<properties>
-		<repo.location>${basedir}/target/repository</repo.location>
+		<repo.location>${basedir}/target/repositoryFiles</repo.location>
+		<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>
+		<!--<p2.repo.url>
+			file:///home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository</p2.repo.url>-->
 		<local.uuid>${project.build.uuid}</local.uuid>
 		<local.p2.timestamp>${timestamp}</local.p2.timestamp>
+		<update.id>org.eclipse.core.pki.update-1.0.0-SNAPSHOT</update.id>
 	</properties>
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>us.springett</groupId>
 				<artifactId>maven-uuid-generator</artifactId>
@@ -30,6 +36,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -47,6 +54,7 @@
 					<doUpdate>true</doUpdate>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
@@ -65,27 +73,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-repository-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>maven-p2-site</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>assemble-maven-repository</goal>
-							<goal>fix-artifacts-metadata</goal>
-							<!--<goal>archive-repository</goal>-->
-						</goals>
-						<configuration>
-							<includeReactor>false</includeReactor>
-							<includeDependencies>false</includeDependencies>
-							<includeTransitiveDependencies>false</includeTransitiveDependencies>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
@@ -102,6 +90,7 @@
 					<installFeatures>true</installFeatures>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
@@ -120,6 +109,7 @@
 					<target>target/repository/features</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-p2-extras-plugin</artifactId>
@@ -137,6 +127,7 @@
 							<artifactRepositoryLocation>${repo.location}</artifactRepositoryLocation>
 							<metadataRepositoryLocation>${repo.location}</metadataRepositoryLocation>
 							<sourceLocation>${repo.location}</sourceLocation>
+							<sourceLocation>${project.build.directory}/classes</sourceLocation>
 						</configuration>
 					</execution>
 				</executions>
@@ -171,13 +162,13 @@
 										<include>*.jar</include>
 									</includes>
 								</resource>
-								<!--<resource>
+								<resource>
 									<directory>
 										../../bundles/org.eclipse.ui.pki/target/dependency</directory>
 									<includes>
 										<include>*.jar</include>
 									</includes>
-								</resource>-->
+								</resource>
 								<resource>
 									<directory>${project.basedir}</directory>
 									<includes>
@@ -203,8 +194,8 @@
 									<directory>
 										../../features/org.eclipse.core.pki.feature/target</directory>
 									<includes>
-										<!--<include>*.jar</include>-->
-										<!--<include>*.zip</include>-->
+										<include>*.jar</include>
+										<include>*.zip</include>
 									</includes>
 								</resource>
 
@@ -238,7 +229,28 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>maven-p2-site</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>assemble-maven-repository</goal>
+							<goal>fix-artifacts-metadata</goal>
+							<goal>archive-repository</goal>
+						</goals>
+						<configuration>
+							<includeReactor>false</includeReactor>
+							<includeDependencies>true</includeDependencies>
+							<includeTransitiveDependencies>false</includeTransitiveDependencies>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>-->
+			<!--<plugin>
 				<groupId>com.coderplus.maven.plugins</groupId>
 				<artifactId>copy-rename-maven-plugin</artifactId>
 				<version>1.0.1</version>
@@ -249,25 +261,27 @@
 						<goals>
 							<goal>rename</goal>
 						</goals>
-						<!--<configuration>
+						<configuration>
 							<sourceFile>
 								${project.build.directory}/repository/p2.index
 							</sourceFile>
 							<destinationFile>
 								${project.build.directory}/repository/site.xml</destinationFile>
-						</configuration>-->
+						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.7.1</version>
+
 				<executions>
 					<execution>
-						<id>assembly</id>
+						<id>build-artifacts</id>
 						<configuration>
+
 							<inlineDescriptors>
 								<inlineDescriptor>
 									<id>artifacts</id>
@@ -275,17 +289,34 @@
 										<format>jar</format>
 									</formats>
 									<includeBaseDirectory>false</includeBaseDirectory>
+									<fileSets>
+										<fileset>
+											<filtered>true</filtered>
+											<includes>
+												<include>
+													artifacts.xml
+												</include>
+											</includes>
+											<excludes>
+												<exclude>**META-INF</exclude>
+												<exclude>META-INF/MANIFEST.MF</exclude>
+											</excludes>
+										</fileset>
+									</fileSets>
 									<files>
 										<file>
-											<source>${project.build.outputDirectory}/artifacts.xml</source>
+											<source>
+												${project.build.outputDirectory}/artifacts.xml</source>
 											<outputDirectory>/</outputDirectory>
 											<destName>artifacts.xml</destName>
+
 										</file>
 									</files>
 								</inlineDescriptor>
 							</inlineDescriptors>
-							<finalName>artifacts</finalName>
+							<finalName>repository/artifacts</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
+
 						</configuration>
 						<phase>package</phase>
 						<goals>
@@ -293,27 +324,32 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>build-b</id>
+						<id>build-content</id>
 						<configuration>
+							<archive></archive>
 							<inlineDescriptors>
 								<inlineDescriptor>
 									<id>content</id>
+
 									<formats>
 										<format>jar</format>
 									</formats>
 									<includeBaseDirectory>false</includeBaseDirectory>
 									<files>
 										<file>
-											<source>${project.build.outputDirectory}/content.xml</source>
+											<source>
+												${project.build.outputDirectory}/content.xml</source>
 											<destName>content.xml</destName>
 										</file>
 									</files>
 								</inlineDescriptor>
 							</inlineDescriptors>
-							<finalName>content</finalName>
+
+
+							<finalName>repository/content</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
 						</configuration>
-						
+
 						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
@@ -321,6 +357,50 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.6.4</version>
+				<configuration>
+					<goalPrefix>build-xz</goalPrefix>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generated-helpmojo</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>descriptor</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>ant-run-delete-blob</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target name="delete blobstore">
+								<echo message="Deleting ${basedir}/target/repository..."/>
+								<!--<delete verbose="true" >
+									
+									<fileset
+										dir="${basedir}/target/repository/.blobstore"/>
+								</delete>-->
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 		<resources>
 			<resource>

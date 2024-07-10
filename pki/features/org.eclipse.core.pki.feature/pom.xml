@@ -14,7 +14,7 @@
   <properties>
 		
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
-		<maven.compiler.release>18</maven.compiler.release>
+		<maven.compiler.release>17</maven.compiler.release>
 		<eclipse-version>2024-06</eclipse-version>
 		
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
@@ -49,8 +49,8 @@
 							<format>${tycho.buildqualifier.format}</format>
 							<!--<finalName>
 								${project.artifactId}_${qualifiedVersion}</finalName>-->
-							<finalName>
-								${project.artifactId}_poof}</finalName>	
+							<!--<finalName>
+								${project.artifactId}_poof}</finalName>	-->
 						</configuration>
 					</execution>
 				</executions>

@@ -6,5 +6,5 @@
    <feature id="org.eclipse.core.pki.feature" version="1.0.2.qualifier"/>
    <category-def name="pkisecurity" label="PKI Security Plugin Feature"/>
    
-   <repository-reference location="https://javajoes.github.io/about/p2site" name="PKI Security Update Site" enabled="false" />
+   <repository-reference location="${p2.rep.url}" name="PKI Security Update Site" enabled="false" />
 </site>

@@ -21,7 +21,12 @@ import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.Properties;
-
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -60,6 +65,9 @@ public class PKISetup implements BundleActivator, IStartup {
 	PKIProperties pkiInstance = null;
 	Properties pkiProperties = null;
 	Optional<KeyStore> keystoreContainer = null;
+	private static final int DIGITAL_SIGNATURE = 0;
+	private static final int KEY_CERT_SIGN = 5;
+	private static final int CRL_SIGN = 6;
 
 	public PKISetup() {
 		super();
@@ -196,6 +204,7 @@ public class PKISetup implements BundleActivator, IStartup {
 								HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
 								pkiInstance = PKIProperties.getInstance();
 								pkiInstance.load();
+								setUserEmail();
 								LogUtil.logInfo("PKISetup default SSLContext has been configured."); //$NON-NLS-1$
 							}
 						} catch (NoSuchAlgorithmException e) {
@@ -220,6 +229,52 @@ public class PKISetup implements BundleActivator, IStartup {
 
 	private void setKeyStoreLoaded(boolean isKeyStoreLoaded) {
 		PKISetup.isKeyStoreLoaded = isKeyStoreLoaded;
+	}
+	private void setUserEmail() {
+		try {
+			Enumeration<String> en = keyStore.aliases();
+			while (en.hasMoreElements()) {
+				String alias = en.nextElement();
+				//System.out.println("      " + alias);
+				Certificate cert = keyStore.getCertificate(alias);
+				if (cert.getType().equalsIgnoreCase("X.509"))
+				{
+					X509Certificate X509 = (X509Certificate) cert;
+					
+					//
+					// we need to make sure this is a digital certificate instead of a server 
+					// cert or something
+					//
+					if (isDigitalSignature(X509.getKeyUsage())) {
+						Collection<List<?>> altnames = X509.getSubjectAlternativeNames();
+						if (altnames != null) {
+							for (List<?> item : altnames) {
+								Integer type = (Integer) item.get(0);
+								if (type == 1)
+									try {
+										String userEmail = item.toArray()[1].toString();
+										System.setProperty("mail.smtp.user", userEmail);
+									}
+								catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+					}
+
+				}
+			}
+		} catch(Exception err) {
+			
+		}
+	}
+	private static boolean isDigitalSignature(boolean[] ba) {
+		if ( ba != null) {
+			return ba[DIGITAL_SIGNATURE] && !ba[KEY_CERT_SIGN] && !ba[CRL_SIGN];
+		} else {
+			return false;
+		}
 	}
 
 	/**
