@@ -447,7 +447,17 @@ public class AuthenticationPlugin extends AbstractUIPlugin {
 		//
 		// set the HTTPS context this program will use. 
 		//
-		setHTTPSContext();
+		//setHTTPSContext();
+		SSLContext context = null;
+		try {
+			context = SSLContext.getDefault();
+			context.getInstance("TLS");
+		} catch(Exception ctxErr) {
+			//  May not be set yet
+		}
+		if (!(context.getProvider().isConfigured()) ) {
+			setHTTPSContext();
+		}
 		
     	return setKeyStoreProperties;
     }

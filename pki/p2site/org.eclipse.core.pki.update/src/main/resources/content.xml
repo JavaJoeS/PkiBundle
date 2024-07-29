@@ -75,8 +75,8 @@
       </provided>
       <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
     </provides>
-    <requires size='14'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.common' range='3.12.0'/>
+    <requires size='13'>
+      <!--<required namespace='osgi.bundle' name='org.eclipse.equinox.common' range='3.12.0'/>-->
       <required namespace='osgi.bundle' name='org.eclipse.ui.workbench' range='0.0.0'/>
       <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.11.100'/>
       <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.4.0'/>
@@ -153,7 +153,7 @@
           org.eclipse.ui.pki
         </description>
       </requiredProperties>
-      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki.source' range='[1.0.1.${buildQualifier},1.0.0.${buildQualifier}]' optional='true'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.pki.source' range='[1.0.1.${buildQualifier},1.0.1.${buildQualifier}]' optional='true'>
         <filter>
           (org.eclipse.update.install.sources=true)
         </filter>

@@ -12,8 +12,13 @@
 	<!--<packaging>pom</packaging>-->
 	<packaging>eclipse-repository</packaging>
 	<properties>
-		<repo.location>${basedir}/target/repositoryFiles</repo.location>
-		<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>
+		<!--<repositoryLocation>${basedir}/target/repositoryFiles</repositoryLocation>-->
+		<repo.home>${basedir}/target/repositoryFiles/${buildQualifier}</repo.home>
+		<!--<repo.location>${basedir}/target/repository/${buildQualifier}</repo.location>-->
+		<repo.location>${basedir}/target/repository</repo.location>
+		<publish.location>${basedir}/target/publish</publish.location>
+		<!--<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>-->
+		<p2.repo.url>https://www.delmarvasecurity.net/p2site</p2.repo.url>
 		<!--<p2.repo.url>
 			file:///home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository</p2.repo.url>-->
 		<local.uuid>${project.build.uuid}</local.uuid>
@@ -132,8 +137,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -178,7 +182,7 @@
 							</resources>
 
 							<outputDirectory>
-								${project.build.directory}/repository/plugins</outputDirectory>
+								${repo.location}/plugins</outputDirectory>
 						</configuration>
 					</execution>
 
@@ -201,8 +205,7 @@
 
 							</resources>
 
-							<outputDirectory>
-								${project.build.directory}/repository/features</outputDirectory>
+							<outputDirectory>${repo.location}/features</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -217,18 +220,39 @@
 									<directory>
 										${project.build.directory}/classes</directory>
 									<includes>
-										<include>*.xml</include>
+										<include>site.xml</include>
 									</includes>
 								</resource>
 
 							</resources>
 
-							<outputDirectory>
-								${project.build.directory}/repository/</outputDirectory>
+							<outputDirectory>${repo.home}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-composite</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>
+										${project.build.directory}/classes</directory>
+									<includes>
+										<include>composite*.xml</include>
+									</includes>
+								</resource>
+
+							</resources>
+
+							<outputDirectory>${repo.home}</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			
 			<!--<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-repository-plugin</artifactId>
@@ -250,6 +274,8 @@
 					</execution>
 				</executions>
 			</plugin>-->
+			
+			
 			<!--<plugin>
 				<groupId>com.coderplus.maven.plugins</groupId>
 				<artifactId>copy-rename-maven-plugin</artifactId>
@@ -271,7 +297,77 @@
 					</execution>
 				</executions>
 			</plugin>-->
+			
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>create-artifacts-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<artifactSet>
+								<excludes>
+									<exclude>*</exclude>
+								</excludes>
+							</artifactSet>
+							<transformers>     
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                                    <resource>artifacts.xml</resource>
+                                    <file>${project.build.directory}/classes/artifacts.xml</file>
+                                </transformer>
+                            </transformers>
+							<filters>
+								<filter>
+									<excludes>
+										<exclude>META-INF/**</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<outputDirectory>${repo.location}</outputDirectory>
+							<finalName>artifacts</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>create-content-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<artifactSet>
+								<excludes>
+									<exclude>*</exclude>
+								</excludes>
+							</artifactSet>
+							<transformers>     
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                                    <resource>content.xml</resource>
+                                    <file>${project.build.directory}/classes/content.xml</file>
+                                </transformer>
+                            </transformers>
+							<filters>
+								<filter>
+									<excludes>
+										<exclude>META-INF/**</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<outputDirectory>${repo.location}</outputDirectory>
+							<finalName>content</finalName>
+						</configuration>
+					</execution>
+				</executions>
 
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -279,12 +375,11 @@
 
 				<executions>
 					<execution>
-						<id>build-artifacts</id>
+						<id>build-artifacts-to-jar</id>
 						<configuration>
-
 							<inlineDescriptors>
 								<inlineDescriptor>
-									<id>artifacts</id>
+									<id>artifacts-jar-them-up</id>
 									<formats>
 										<format>jar</format>
 									</formats>
@@ -298,7 +393,7 @@
 												</include>
 											</includes>
 											<excludes>
-												<exclude>**META-INF</exclude>
+												<exclude>META-INF/**</exclude>
 												<exclude>META-INF/MANIFEST.MF</exclude>
 											</excludes>
 										</fileset>
@@ -307,7 +402,7 @@
 										<file>
 											<source>
 												${project.build.outputDirectory}/artifacts.xml</source>
-											<outputDirectory>/</outputDirectory>
+											<outputDirectory>/footifacts</outputDirectory>
 											<destName>artifacts.xml</destName>
 
 										</file>
@@ -389,7 +484,8 @@
 						</goals>
 						<configuration>
 							<target name="delete blobstore">
-								<echo message="Deleting ${basedir}/target/repository..."/>
+								<echo
+									message="Deleting ${basedir}/target/repository..." />
 								<!--<delete verbose="true" >
 									
 									<fileset
