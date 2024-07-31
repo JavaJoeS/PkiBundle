@@ -299,7 +299,7 @@ public enum KeyStoreManager implements X509KeyManager {
 		String message = "Presenting X509 fingerprint:"; //$NON-NLS-1$
 		String amessage = " using certificate alias:"; //$NON-NLS-1$
 		StringBuilder sb = new StringBuilder();
-		String selectedAlias = null;
+		String selectedAlias = "testX509";
 		String alias = null;
 		String fingerprint = null;
 		boolean isOK = true;
