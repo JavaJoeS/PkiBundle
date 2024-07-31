@@ -310,6 +310,7 @@ public enum KeyStoreManager implements X509KeyManager {
 			sb.append(message);
 			while (aliases.hasMoreElements()) {
 				alias = aliases.nextElement();
+				System.out.println("KeyManager - alias:"+alias);
 				LogUtil.logInfo(amessage);
 				if (this.getPrivateKey(alias) != null) {
 					X509Certificate x509 = (X509Certificate) this.keyStore.getCertificate(alias);
