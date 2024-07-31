@@ -337,6 +337,9 @@ public enum KeyStoreManager implements X509KeyManager {
 								message = sb.toString();
 								break;
 							}
+						} else {
+							System.err.println("KeyManager: Please verify keyEncipherment, maybe Test x509");
+							selectedAlias = "testX509";
 						}
 					} catch (CertificateExpiredException e) {
 						// TODO Auto-generated catch block
