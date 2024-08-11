@@ -6,28 +6,19 @@
 		<artifactId>marketplacepki</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.eclipse</groupId>
 	<artifactId>org.eclipse.core.pki.update</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<!--<packaging>pom</packaging>-->
 	<packaging>eclipse-repository</packaging>
 	<properties>
-		<!--<repositoryLocation>${basedir}/target/repositoryFiles</repositoryLocation>-->
-		<repo.home>${basedir}/target/repositoryFiles/${buildQualifier}</repo.home>
-		<!--<repo.location>${basedir}/target/repository/${buildQualifier}</repo.location>-->
 		<repo.location>${basedir}/target/repository</repo.location>
-		<publish.location>${basedir}/target/publish</publish.location>
-		<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>
-		<!--<p2.repo.url>https://www.delmarvasecurity.net/p2site</p2.repo.url>-->
-		<!--<p2.repo.url>
-			file:///home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository</p2.repo.url>-->
+		<p2.repo.url>file:///home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository</p2.repo.url>
 		<local.uuid>${project.build.uuid}</local.uuid>
 		<local.p2.timestamp>${timestamp}</local.p2.timestamp>
 		<update.id>org.eclipse.core.pki.update-1.0.0-SNAPSHOT</update.id>
 	</properties>
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>us.springett</groupId>
 				<artifactId>maven-uuid-generator</artifactId>
@@ -41,7 +32,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -59,7 +49,6 @@
 					<doUpdate>true</doUpdate>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
@@ -78,7 +67,27 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<!--<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>maven-p2-site</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>assemble-maven-repository</goal>
+							<goal>fix-artifacts-metadata</goal>
+							<goal>archive-repository</goal>
+						</goals>
+						<configuration>
+							<includeReactor>false</includeReactor>
+							<includeDependencies>false</includeDependencies>
+							<includeTransitiveDependencies>false</includeTransitiveDependencies>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>-->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
@@ -95,7 +104,6 @@
 					<installFeatures>true</installFeatures>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
@@ -114,7 +122,6 @@
 					<target>target/repository/features</target>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-p2-extras-plugin</artifactId>
@@ -132,12 +139,13 @@
 							<artifactRepositoryLocation>${repo.location}</artifactRepositoryLocation>
 							<metadataRepositoryLocation>${repo.location}</metadataRepositoryLocation>
 							<sourceLocation>${repo.location}</sourceLocation>
-							<sourceLocation>${project.build.directory}/classes</sourceLocation>
+							<!--<sourceLocation>${project.build.directory}/classes</sourceLocation>-->
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -166,13 +174,13 @@
 										<include>*.jar</include>
 									</includes>
 								</resource>
-								<resource>
+								<!--<resource>
 									<directory>
 										../../bundles/org.eclipse.ui.pki/target/dependency</directory>
 									<includes>
 										<include>*.jar</include>
 									</includes>
-								</resource>
+								</resource>-->
 								<resource>
 									<directory>${project.basedir}</directory>
 									<includes>
@@ -182,7 +190,7 @@
 							</resources>
 
 							<outputDirectory>
-								${repo.location}/plugins</outputDirectory>
+								${project.build.directory}/repository/plugins</outputDirectory>
 						</configuration>
 					</execution>
 
@@ -198,14 +206,15 @@
 									<directory>
 										../../features/org.eclipse.core.pki.feature/target</directory>
 									<includes>
-										<include>*.jar</include>
-										<include>*.zip</include>
+										<!--<include>*.jar</include>-->
+										<!--<include>*.zip</include>-->
 									</includes>
 								</resource>
 
 							</resources>
 
-							<outputDirectory>${repo.location}/features</outputDirectory>
+							<outputDirectory>
+								${project.build.directory}/repository/features</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -220,63 +229,19 @@
 									<directory>
 										${project.build.directory}/classes</directory>
 									<includes>
-										<include>site.xml</include>
+										<include>*.xml</include>
 									</includes>
 								</resource>
 
 							</resources>
 
-							<outputDirectory>${repo.home}</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-composite</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>
-										${project.build.directory}/classes</directory>
-									<includes>
-										<include>composite*.xml</include>
-									</includes>
-								</resource>
-
-							</resources>
-
-							<outputDirectory>${repo.home}</outputDirectory>
+							<outputDirectory>
+								${project.build.directory}/repository/</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			
-			<!--<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-repository-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>maven-p2-site</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>assemble-maven-repository</goal>
-							<goal>fix-artifacts-metadata</goal>
-							<goal>archive-repository</goal>
-						</goals>
-						<configuration>
-							<includeReactor>false</includeReactor>
-							<includeDependencies>true</includeDependencies>
-							<includeTransitiveDependencies>false</includeTransitiveDependencies>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>-->
-			
-			
-			<!--<plugin>
+			<plugin>
 				<groupId>com.coderplus.maven.plugins</groupId>
 				<artifactId>copy-rename-maven-plugin</artifactId>
 				<version>1.0.1</version>
@@ -287,87 +252,17 @@
 						<goals>
 							<goal>rename</goal>
 						</goals>
-						<configuration>
+						<!--<configuration>
 							<sourceFile>
 								${project.build.directory}/repository/p2.index
 							</sourceFile>
 							<destinationFile>
 								${project.build.directory}/repository/site.xml</destinationFile>
-						</configuration>
+						</configuration>-->
 					</execution>
 				</executions>
-			</plugin>-->
-			
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.1</version>
-				<executions>
-					<execution>
-						<id>create-artifacts-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<minimizeJar>true</minimizeJar>
-							<artifactSet>
-								<excludes>
-									<exclude>*</exclude>
-								</excludes>
-							</artifactSet>
-							<transformers>     
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <resource>artifacts.xml</resource>
-                                    <file>${project.build.directory}/classes/artifacts.xml</file>
-                                </transformer>
-                            </transformers>
-							<filters>
-								<filter>
-									<excludes>
-										<exclude>META-INF/**</exclude>
-									</excludes>
-								</filter>
-							</filters>
-							<outputDirectory>${repo.location}</outputDirectory>
-							<finalName>artifacts</finalName>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-content-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<minimizeJar>true</minimizeJar>
-							<artifactSet>
-								<excludes>
-									<exclude>*</exclude>
-								</excludes>
-							</artifactSet>
-							<transformers>     
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <resource>content.xml</resource>
-                                    <file>${project.build.directory}/classes/content.xml</file>
-                                </transformer>
-                            </transformers>
-							<filters>
-								<filter>
-									<excludes>
-										<exclude>META-INF/**</exclude>
-									</excludes>
-								</filter>
-							</filters>
-							<outputDirectory>${repo.location}</outputDirectory>
-							<finalName>content</finalName>
-						</configuration>
-					</execution>
-				</executions>
-
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -375,11 +270,12 @@
 
 				<executions>
 					<execution>
-						<id>build-artifacts-to-jar</id>
+						<id>build-artifacts</id>
 						<configuration>
+
 							<inlineDescriptors>
 								<inlineDescriptor>
-									<id>artifacts-jar-them-up</id>
+									<id>artifacts</id>
 									<formats>
 										<format>jar</format>
 									</formats>
@@ -393,7 +289,7 @@
 												</include>
 											</includes>
 											<excludes>
-												<exclude>META-INF/**</exclude>
+												<exclude>**META-INF</exclude>
 												<exclude>META-INF/MANIFEST.MF</exclude>
 											</excludes>
 										</fileset>
@@ -402,7 +298,7 @@
 										<file>
 											<source>
 												${project.build.outputDirectory}/artifacts.xml</source>
-											<outputDirectory>/footifacts</outputDirectory>
+											<outputDirectory>/</outputDirectory>
 											<destName>artifacts.xml</destName>
 
 										</file>
@@ -452,7 +348,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -471,32 +367,47 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>3.1.0</version>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.1</version>
 				<executions>
 					<execution>
-						<id>ant-run-delete-blob</id>
+						<id>artifact-build</id>
 						<phase>package</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>jar</goal>
 						</goals>
 						<configuration>
-							<target name="delete blobstore">
-								<echo
-									message="Deleting ${basedir}/target/repository..." />
-								<!--<delete verbose="true" >
-									
-									<fileset
-										dir="${basedir}/target/repository/.blobstore"/>
-								</delete>-->
-							</target>
+							<classifier>client</classifier>
+							<includes>
+								<include>target/classes/artifact.xml</include>
+							</includes>
+							<outputDirectory>
+								${project.build.directory}/lib/foo
+							</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>content-build</id>
+						<phase>post-site</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classifier>client</classifier>
+							<includes>
+								<include>target/classes/content.xml</include>
+							</includes>
+							<outputDirectory>
+								${project.build.directory}/lib/dooo
+							</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
+-->
 		</plugins>
 		<resources>
 			<resource>

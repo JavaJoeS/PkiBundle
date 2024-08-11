@@ -13,12 +13,12 @@
 	<packaging>eclipse-repository</packaging>
 	<properties>
 		<!--<repositoryLocation>${basedir}/target/repositoryFiles</repositoryLocation>-->
-		<repo.home>${basedir}/target/repositoryFiles/${buildQualifier}</repo.home>
+		<repo.home>${basedir}/target/repository</repo.home>
 		<!--<repo.location>${basedir}/target/repository/${buildQualifier}</repo.location>-->
 		<repo.location>${basedir}/target/repository</repo.location>
 		<publish.location>${basedir}/target/publish</publish.location>
-		<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>
-		<!--<p2.repo.url>https://www.delmarvasecurity.net/p2site</p2.repo.url>-->
+		<!--<p2.repo.url>https://idetoolsio.github.io/core/updatesite</p2.repo.url>-->
+		<p2.repo.url>https://www.delmarvasecurity.net/p2site</p2.repo.url>
 		<!--<p2.repo.url>
 			file:///home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository</p2.repo.url>-->
 		<local.uuid>${project.build.uuid}</local.uuid>
@@ -253,7 +253,7 @@
 				</executions>
 			</plugin>
 			
-			<!--<plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-repository-plugin</artifactId>
 				<version>${tycho.version}</version>
@@ -273,7 +273,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
 			
 			
 			<!--<plugin>
@@ -368,7 +368,7 @@
 
 			</plugin>
 			
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.7.1</version>
@@ -452,7 +452,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
