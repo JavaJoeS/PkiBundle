@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.ui.pki.pkiselection;
 
+import org.eclipse.core.pki.auth.PKIState;
+
 public class PKCSpick {
 	private static final PKCSpick pkcs = new PKCSpick(); 
 	private static boolean isPKCS11on=false;
