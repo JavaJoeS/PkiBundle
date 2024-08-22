@@ -26,6 +26,7 @@ import org.eclipse.ui.pki.pkiselection.PKCSSelected;
 import org.eclipse.ui.pki.pkiselection.PKCSpick;
 import org.eclipse.ui.pki.AuthenticationPlugin;
 
+import org.eclipse.core.pki.auth.PublicKeySecurity;
 
 
 public class PKILoginWizard extends Wizard {
