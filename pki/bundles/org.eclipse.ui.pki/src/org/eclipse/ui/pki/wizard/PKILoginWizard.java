@@ -150,6 +150,7 @@ public class PKILoginWizard extends Wizard {
 	
 	    		// Tell the page to finish its own business
 	    		certSelectionPage.performFinish();
+	    		PublicKeySecurity.INSTANCE.setupPKIfile();
 	    		return true;
 	    	}
 			

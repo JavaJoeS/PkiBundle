@@ -1087,6 +1087,7 @@ public class CertificateSelectionPage extends WizardPage  {
     	try {
     		AuthenticationPlugin plugin = AuthenticationPlugin.getDefault();
     		if ( PKIState.CONTROL.isPKCS12on()) {
+    			isDone=true;
     			String path = certPathText.getText().trim();
     			if ( !path.equals( "" ) ) { 
 				    plugin.setCertificatePath( path );

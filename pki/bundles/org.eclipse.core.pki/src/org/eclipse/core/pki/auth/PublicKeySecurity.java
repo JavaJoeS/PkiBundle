@@ -21,6 +21,12 @@ public enum PublicKeySecurity {
 	public boolean isTurnedOn() {
 		return SecurityFileSnapshot.INSTANCE.image();
 	}
+	public void setupPKIfile() {
+		
+		SecurityFileSnapshot.INSTANCE.create();
+		//getPkiPropertyFile(String pin);
+		
+	}
 
 	public Properties getPkiPropertyFile(String pin) {
 		salt = new String(System.getProperty("user.name") + pin).getBytes(); //$NON-NLS-1$

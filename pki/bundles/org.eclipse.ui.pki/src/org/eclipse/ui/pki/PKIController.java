@@ -106,7 +106,7 @@ public class PKIController implements IStartup {
 					PKIState.CONTROL.setPKCS12on(true);
 					PKCSSelected.setKeystoreformat(KeyStoreFormat.PKCS12);
 					
-					System.out.println("PKIController PKI PKCS12 PASSWD:["+System.getProperty("javax.net.ssl.keyStorePassword")+"]");
+					//System.out.println("PKIController PKI PKCS12 PASSWD:["+System.getProperty("javax.net.ssl.keyStorePassword")+"]");
 					AuthenticationPlugin.getDefault().setCertPassPhrase(System.getProperty("javax.net.ssl.keyStorePassword"));
 	    				
 				} else {

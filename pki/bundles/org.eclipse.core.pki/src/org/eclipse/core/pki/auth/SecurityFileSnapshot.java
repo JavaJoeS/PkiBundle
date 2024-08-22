@@ -83,12 +83,31 @@ public enum SecurityFileSnapshot {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		isSecurityFileRequired(""); //$NON-NLS-1$
+		//isSecurityFileRequired(""); //$NON-NLS-1$
 		if (Files.exists(userDotEclipseHome)) {
 			LogUtil.logWarning("A PKI file detected;" + userDotEclipseHome.toString()); //$NON-NLS-1$
 			return true;
 		}
 		return false;
+	}
+	public boolean createPKI() {
+		Optional<Boolean> eclipseHome = Optional.ofNullable(Files.exists(Paths.get(USER_HOME))); // $NON-NLS-1$
+		if (!(eclipseHome.isEmpty())) {
+			if (!(Files.exists(Paths.get(USER_HOME + FileSystems.getDefault().getSeparator() + DotEclipse
+					+ FileSystems.getDefault().getSeparator() + ".pki")))) {
+				String pkiFileFQN=USER_HOME + FileSystems.getDefault().getSeparator() + DotEclipse
+						+ FileSystems.getDefault().getSeparator() + ".pki";
+
+				userDotEclipseHome = Paths.get(pkiFileFQN);
+				// create the PKI file
+				Files.createFile(userDotEclipseHome);
+				isSecurityFileRequired(pkiFileFQN); 
+				return true;
+			} else {
+				//PKI file already exists
+				return false;
+			}
+		}
 	}
 
 	public Properties load(String password, String salt) {

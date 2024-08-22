@@ -21,6 +21,16 @@ public class PKCSpick {
 	public static PKCSpick getInstance() {return pkcs;}
 	public boolean isPKCS11on() {return isPKCS11on;}
 	public boolean isPKCS12on() {return isPKCS12on;}
-	public void setPKCS11on(boolean isPKCS11on) {PKCSpick.isPKCS11on = isPKCS11on;}
-	public void setPKCS12on(boolean isPKCS12on) {PKCSpick.isPKCS12on = isPKCS12on;}
+	public void setPKCS11on(boolean isPKCS11on) {
+		PKCSpick.isPKCS11on = isPKCS11on;
+		if ( PKIState.CONTROL.isPKCS11on()) {
+			PKCSpick.isPKCS11on=true;
+		}
+	}
+	public void setPKCS12on(boolean isPKCS12on) {
+		PKCSpick.isPKCS12on = isPKCS12on;
+		if ( PKIState.CONTROL.isPKCS12on()) {
+			PKCSpick.isPKCS12on=true;
+		}
+	}
 }
