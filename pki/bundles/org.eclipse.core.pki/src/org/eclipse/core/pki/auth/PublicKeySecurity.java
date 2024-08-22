@@ -23,7 +23,7 @@ public enum PublicKeySecurity {
 	}
 	public void setupPKIfile() {
 		
-		SecurityFileSnapshot.INSTANCE.create();
+		SecurityFileSnapshot.INSTANCE.createPKI();
 		//getPkiPropertyFile(String pin);
 		
 	}

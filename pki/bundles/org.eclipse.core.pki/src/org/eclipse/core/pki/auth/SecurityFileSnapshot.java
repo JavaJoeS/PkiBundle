@@ -100,14 +100,20 @@ public enum SecurityFileSnapshot {
 
 				userDotEclipseHome = Paths.get(pkiFileFQN);
 				// create the PKI file
-				Files.createFile(userDotEclipseHome);
-				isSecurityFileRequired(pkiFileFQN); 
+				try {
+					Files.createFile(userDotEclipseHome);
+					isSecurityFileRequired(pkiFileFQN);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 				return true;
 			} else {
 				//PKI file already exists
 				return false;
 			}
 		}
+		return false;
 	}
 
 	public Properties load(String password, String salt) {
