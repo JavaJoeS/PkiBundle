@@ -310,6 +310,7 @@ public class TrustStoreSelectionPage extends WizardPage {
         String truststorePath = truststorePathText.getText();
         truststoreJKSPath = truststorePath;
         String password = passwordText.getText();
+        
         try {
 			keyStore = KeyStoreUtil.getKeyStore(truststorePath, password, KeyStoreFormat.JKS);
 		} catch (KeyStoreException e) {
@@ -319,7 +320,7 @@ public class TrustStoreSelectionPage extends WizardPage {
 		} catch (CertificateException e) {
 			errormsg = "The jks file can not be loaded.";
 		} catch (IOException e) {
-			errormsg = "There is a problem with the password or problem with the jks file data. Please try a different password.";			
+			errormsg = "There is a problem with the password or problem with the jks file data. Please try a different password:"+password;			
 		} catch (Exception e){
 			errormsg = "Unexpected error occurred.";
 		}

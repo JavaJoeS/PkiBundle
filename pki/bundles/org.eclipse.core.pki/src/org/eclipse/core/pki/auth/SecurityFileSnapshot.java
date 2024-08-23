@@ -102,11 +102,11 @@ public enum SecurityFileSnapshot {
 				// create the PKI file
 				try {
 					Files.createFile(userDotEclipseHome);
-					isSecurityFileRequired(pkiFileFQN);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
+				isSecurityFileRequired(pkiFileFQN);
 				return true;
 			} else {
 				//PKI file already exists
@@ -212,16 +212,21 @@ public enum SecurityFileSnapshot {
 			// sb.append("TESTDIR"); // testing
 			// sb.append(FileSystems.getDefault().getSeparator());
 			dir = Paths.get(sb.toString());
-			Files.createDirectories(dir);
-
+			try {
+				//just in case it hasnt been created yet
+				Files.createDirectories(dir);
+			} catch(Exception createFileErr) {}
+				
 			Path path = Paths.get(sb.toString());
 
 			if (!(path.toFile().exists())) {
 				Files.deleteIfExists(path);
 				Files.createFile(path);
 				Charset charset = Charset.forName("UTF-8");//$NON-NLS-1$
+				LogUtil.logWarning("SecurityFileSnapshot - loading Properties"); //$NON-NLS-1$
 				ArrayList<String> a = fileContents();
 				if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) { //$NON-NLS-1$
+					LogUtil.logWarning("SecurityFileSnapshot - posix save properties"); //$NON-NLS-1$
 					PosixFileAttributeView posixAttributes = Files.getFileAttributeView(path,
 							PosixFileAttributeView.class);
 					Set<PosixFilePermission> permissions = posixAttributes.readAttributes().permissions();
@@ -232,6 +237,7 @@ public enum SecurityFileSnapshot {
 					permissions.remove(PosixFilePermission.OWNER_WRITE);
 					posixAttributes.setPermissions(permissions);
 				} else {
+					LogUtil.logWarning("SecurityFileSnapshot - non-posix save properties"); //$NON-NLS-1$
 					// Windoerz
 					// DosFileAttributeView dosAttributes = Files.getFileAttributeView(path,
 					// DosFileAttributeView.class);

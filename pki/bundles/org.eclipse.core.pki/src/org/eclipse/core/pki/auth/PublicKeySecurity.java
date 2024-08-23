@@ -24,7 +24,6 @@ public enum PublicKeySecurity {
 	public void setupPKIfile() {
 		
 		SecurityFileSnapshot.INSTANCE.createPKI();
-		//getPkiPropertyFile(String pin);
 		
 	}
 

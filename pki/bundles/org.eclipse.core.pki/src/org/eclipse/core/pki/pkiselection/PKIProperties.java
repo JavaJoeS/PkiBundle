@@ -136,6 +136,7 @@ public class PKIProperties extends Authenticator {
 		Optional<String> keyStore = null;
 		Optional<String> keyStorePassword = null;
 		Optional<String> keyStoreProvider = null;
+		LogUtil.logInfo("PKIProperties loading....");
 		keyStore = Optional.ofNullable(System.getProperty("javax.net.ssl.keyStore")); //$NON-NLS-1$
 		if (keyStore.isEmpty()) {
 			sslProperties.setKeyStore(""); //$NON-NLS-1$

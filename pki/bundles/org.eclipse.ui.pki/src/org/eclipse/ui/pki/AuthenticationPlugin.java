@@ -47,6 +47,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.security.auth.callback.CallbackHandler;
+import org.eclipse.core.pki.util.LogUtil;
 import org.eclipse.core.pki.FingerprintX509;
 import org.eclipse.core.pki.auth.EventConstant;
 import org.eclipse.core.pki.auth.PKIState;
