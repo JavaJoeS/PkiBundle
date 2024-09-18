@@ -13,12 +13,14 @@
  *******************************************************************************/
 package org.eclipse.core.pki.pkiselection;
 
+import java.util.Optional;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.widgets.MessageBox;
 //import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -30,6 +32,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.internal.Callback;
 import org.eclipse.core.pki.auth.ContextObservable;
 import org.eclipse.core.pki.util.LogUtil;
+import org.eclipse.core.pki.util.KeyStoreManager;
+import org.eclipse.core.pki.util.KeyStoreFormat;
 
 public class PkiPasswordDialog extends Dialog implements Runnable {
 
@@ -50,7 +54,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	}
 	@Override
 	protected void okPressed() {
-		
+		Optional keystoreContainer=null;
 		LogUtil.logWarning("PkiPasswordDialog OK pressed");
 	    String _passphrase=passwdField.getText();
 	    LogUtil.logWarning("PkiPasswordDialog OK pressed TEXT:"+_passphrase);
@@ -58,11 +62,25 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	      return;
 	    }
 	    pw=_passphrase;
-	    observable.onchange(pw);
-	    setReturnCode(OK);
-	    super.okPressed();
+	    System.setProperty("javax.net.ssl.keyStorePassword", pw); //$NON-NLS-1$
+	    keystoreContainer = Optional.ofNullable(KeyStoreManager.INSTANCE.getKeyStore(System.getProperty("javax.net.ssl.keyStore"), //$NON-NLS-1$
+				System.getProperty("javax.net.ssl.keyStorePassword"), //$NON-NLS-1$
+				KeyStoreFormat.valueOf(System.getProperty("javax.net.ssl.keyStoreType")))); //$NON-NLS-1$
+	    if ((keystoreContainer.isEmpty()) || (!(KeyStoreManager.INSTANCE.isKeyStoreInitialized()))) {
+	    	passwdField.setText("");
+	    	MessageBox boxDialog = 
+	    		    new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
+    		boxDialog.setText("Password Error Message");
+    		boxDialog.setMessage("The password you entered is incorrect?");
+
+    		int returnCode = boxDialog.open();
+	    } else {
+	    	observable.onchange(pw);
+	    	setReturnCode(OK);
+	    	super.okPressed();
 	   
-	    close();
+	    	close();
+	    }
 	}
 	
 	@Override
@@ -78,22 +96,22 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 		// mkae shell mods here
 		shell.setText("PKCS12 PKI Password Input Field");
 		shell.setSize(275, 200);
-		LogUtil.logWarning("PkiPasswordDialog configureShell");
+		//LogUtil.logWarning("PkiPasswordDialog configureShell");
 	}
 
 	public void create() {
 		super.create();
 		passwdField.setFocus();
-		LogUtil.logWarning("PkiPasswordDialog create");
+		//LogUtil.logWarning("PkiPasswordDialog create");
 	}
 
 	public String getPW() {
-		LogUtil.logWarning("PkiPasswordDialog getPW");
+		//LogUtil.logWarning("PkiPasswordDialog getPW");
 		return pw;
 	}
 
 	protected Control createDialogArea(Composite parent) {
-		LogUtil.logWarning("PkiPasswordDialog createDialogArea");
+		//LogUtil.logWarning("PkiPasswordDialog createDialogArea");
 		initializeDialogUnits(parent);
 		Composite main = new Composite(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout();
@@ -110,7 +128,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	}
 
 	public void run() {
-		LogUtil.logWarning("PkiPasswordDialog run methid top");
+		//LogUtil.logWarning("PkiPasswordDialog run methid top");
 		if (uninitialzed) {
 			uninitialzed = false;
 			this.create();
@@ -121,7 +139,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 
 			control.pack();
 
-			LogUtil.logWarning("PkiPasswordDialog run methid NOW OPEN");
+			//LogUtil.logWarning("PkiPasswordDialog run methid NOW OPEN");
 
 			open();
 		}
@@ -130,7 +148,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	public void setup(Composite parent) {
 		if ( isReady ) {
 			isReady=false;
-			LogUtil.logWarning("PkiPasswordDialog setup");
+			//LogUtil.logWarning("PkiPasswordDialog setup");
 	
 			passwdField = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
 			passwdField.setEchoChar('*');
