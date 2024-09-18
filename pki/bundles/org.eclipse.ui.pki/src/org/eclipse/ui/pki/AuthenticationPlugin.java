@@ -1037,6 +1037,7 @@ public class AuthenticationPlugin extends AbstractUIPlugin {
 		if (isSSLSystemPropertiesSet()) {
 			KeyManagerFactory kmf = null;
 			TrustManagerFactory tmf = null;
+			LogUtil.logInfo("AuthenticationPlugin --- setHTTPSContext"); //$NON-NLS-1$
 			try {	
 				if ( PKIState.CONTROL.isPKCS11on() ) {
 					

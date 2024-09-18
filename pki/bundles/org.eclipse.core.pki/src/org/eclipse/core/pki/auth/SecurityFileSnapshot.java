@@ -39,6 +39,7 @@ import org.eclipse.core.pki.util.LogUtil;
 import org.eclipse.core.pki.util.NormalizeGCM;
 import org.eclipse.core.pki.util.SecureGCM;
 import org.eclipse.core.pki.util.TemplateForPKIfile;
+import org.eclipse.core.pki.pkiselection.PkiPasswordInputUI;
 
 public enum SecurityFileSnapshot {
 	INSTANCE;
@@ -139,7 +140,13 @@ public enum SecurityFileSnapshot {
 					String keyStoreType = keyStoreTypeContainer.get().toString();
 					if (keyStoreType.equalsIgnoreCase("PKCS12" )) {
 						// get the passwd from console
-						PokeInConsole.PASSWD.get();
+						//PokeInConsole.PASSWD.get();
+						
+						String pw=PkiPasswordInputUI.DO.get();
+						LogUtil.logWarning("SecurityFileSnapshot - BREAK for INPUT");
+						
+						//System.out.println("SecurityFileSnapshot PASSWD:"+pw);
+						//System.setProperty("javax.net.ssl.keyStorePassword", pw);
 					} else {
 						System.setProperty("javax.net.ssl.keyStorePassword", "");
 					}
