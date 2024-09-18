@@ -19,7 +19,7 @@ public class ContextObservable extends Observable {
 
 	}
 	public void onchange(String s) {
-		LogUtil.logWarning("ContextObservable- BREAK for INPUT");
+		//LogUtil.logWarning("ContextObservable- BREAK for INPUT");
 		setChanged();
 		// notify observers for change
 		notifyObservers(s);

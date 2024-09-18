@@ -57,7 +57,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 		Optional keystoreContainer=null;
 		LogUtil.logWarning("PkiPasswordDialog OK pressed");
 	    String _passphrase=passwdField.getText();
-	    LogUtil.logWarning("PkiPasswordDialog OK pressed TEXT:"+_passphrase);
+	    //LogUtil.logWarning("PkiPasswordDialog OK pressed TEXT:"+_passphrase);
 	    if(_passphrase==null||_passphrase.length()==0){
 	      return;
 	    }
@@ -72,7 +72,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	    		    new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
     		boxDialog.setText("Password Error Message");
     		boxDialog.setMessage("The password you entered is incorrect?");
-
+    		System.clearProperty("javax.net.ssl.keyStorePassword"); //$NON-NLS-1$
     		int returnCode = boxDialog.open();
 	    } else {
 	    	observable.onchange(pw);
@@ -95,7 +95,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 		super.configureShell(shell);
 		// mkae shell mods here
 		shell.setText("PKCS12 PKI Password Input Field");
-		shell.setSize(275, 200);
+		shell.setSize(325, 200);
 		//LogUtil.logWarning("PkiPasswordDialog configureShell");
 	}
 
