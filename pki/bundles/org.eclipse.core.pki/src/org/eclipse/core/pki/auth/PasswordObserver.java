@@ -65,7 +65,7 @@ public class PasswordObserver implements Observer {
 	public void update(Observable obj, Object arg) {
 		Optional<KeyStore> keystoreContainer = null;
 		String pw = (String) arg;
-		LogUtil.logWarning("PasswordObserver- BREAK for INPUT:"+pw);
+		//LogUtil.logWarning("PasswordObserver- BREAK for INPUT:"+pw);
 		System.setProperty("javax.net.ssl.keyStorePassword", pw); //$NON-NLS-1$
 		try {
 
@@ -93,7 +93,6 @@ public class PasswordObserver implements Observer {
 		}
 	}
 	public void setPkiContext() {
-		LogUtil.logError("setPkiContext", null); //$NON-NLS-1$
 		if ((IncomingSystemProperty.SETTINGS.checkTrustStoreType()) && (isKeyStoreLoaded())) {
 			if ((IncomingSystemProperty.SETTINGS.checkTrustStore())
 					&& (KeyStoreManager.INSTANCE.isKeyStoreInitialized())) {

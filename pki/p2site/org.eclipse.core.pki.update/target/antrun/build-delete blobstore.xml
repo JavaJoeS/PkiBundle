@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="maven-antrun-" default="delete blobstore">
-  <target name="delete blobstore">
-    <echo message="Deleting /home/joe/git/PkiBundle/pki/p2site/org.eclipse.core.pki.update/target/repository..." />
-  </target>
-</project>
