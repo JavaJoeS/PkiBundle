@@ -20,9 +20,14 @@ public class ContextObservable extends Observable {
 	}
 	public void onchange(String s) {
 		//LogUtil.logWarning("ContextObservable- BREAK for INPUT");
-		setChanged();
-		// notify observers for change
-		notifyObservers(s);
+		
+		try {
+			setChanged();
+			// notify observers for change
+			notifyObservers(s);
+		} catch (Exception e) {
+			LogUtil.logError("ContextObservable - Failed to notify observers, PKI password input.", e); //$NON-NLS-1$
+		}
 		/*
 		 * try { Thread.sleep(1000); } catch (InterruptedException e) {
 		 * System.out.println("Error Occurred."); }

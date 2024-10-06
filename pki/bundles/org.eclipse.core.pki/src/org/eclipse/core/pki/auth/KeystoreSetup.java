@@ -111,9 +111,9 @@ public class KeystoreSetup  {
 						pkiInstance.load();
 						setUserEmail();
 						// Grab a handle to registry
-						File[] storageDirs = null;
-						boolean[] cacheReadOnly = null;
-						String token = "core.pki";
+						//File[] storageDirs = null;
+						//boolean[] cacheReadOnly = null;
+						//String token = "core.pki";
 						/*
 						 * try { IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot(); //
 						 * IResource resource = //
@@ -131,12 +131,12 @@ public class KeystoreSetup  {
 						// InjectorFactory.getDefault().addBinding(MyPart.class).implementedBy(MyFactory.class)
 						// RegistryStrategy strategy = RegistryFactory.createOSGiStrategy(File[]
 						// storageDirs, boolean[] cacheReadOnly, Object token)
-						RegistryStrategy strategy = RegistryFactory.createOSGiStrategy(storageDirs,
-								cacheReadOnly, token);
-						// IExtensionRegistry registry = RegistryFactory.getRegistry();
-						IExtensionRegistry registry = RegistryFactory.createRegistry(strategy, token, ctx);
-
-						setupAdapter();
+//						RegistryStrategy strategy = RegistryFactory.createOSGiStrategy(storageDirs,
+//								cacheReadOnly, token);
+//						// IExtensionRegistry registry = RegistryFactory.getRegistry();
+//						IExtensionRegistry registry = RegistryFactory.createRegistry(strategy, token, ctx);
+//
+//						setupAdapter();
 						LogUtil.logInfo("PKISetup default SSLContext has been configured."); //$NON-NLS-1$
 					}
 				} catch (NoSuchAlgorithmException e) {
@@ -213,32 +213,32 @@ public class KeystoreSetup  {
 		}
 	}
 
-	private void setupAdapter() {
-		
-		IAdapterFactory pr = new IAdapterFactory() {
-	        @Override
-	        public Class[] getAdapterList() {
-	                return new Class[] { SSLContext.class };
-	        }
-	        
-			@Override
-			public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
-					IResource res = (IResource) adaptableObject;
-					SSLContext v = null;
-					QualifiedName key = new QualifiedName("org.eclipse.core.pki", "context");
-					try {
-						v = (SSLContext) res.getSessionProperty(key);
-						if (v == null) {
-							v = getSSLContext();
-							res.setSessionProperty(key, v);
-						}
-					} catch (CoreException e) {
-						// unable to access session property - ignore
-					}
-					return (T)v;
-			}
-		};
-		Platform.getAdapterManager().registerAdapters(pr,IResource.class);
-	}
+//	private void setupAdapter() {
+//		
+//		IAdapterFactory pr = new IAdapterFactory() {
+//	        @Override
+//	        public Class[] getAdapterList() {
+//	                return new Class[] { SSLContext.class };
+//	        }
+//	        
+//			@Override
+//			public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
+//					IResource res = (IResource) adaptableObject;
+//					SSLContext v = null;
+//					QualifiedName key = new QualifiedName("org.eclipse.core.pki", "context");
+//					try {
+//						v = (SSLContext) res.getSessionProperty(key);
+//						if (v == null) {
+//							v = getSSLContext();
+//							res.setSessionProperty(key, v);
+//						}
+//					} catch (CoreException e) {
+//						// unable to access session property - ignore
+//					}
+//					return (T)v;
+//			}
+//		};
+//		Platform.getAdapterManager().registerAdapters(pr,IResource.class);
+//	}
 
 }
