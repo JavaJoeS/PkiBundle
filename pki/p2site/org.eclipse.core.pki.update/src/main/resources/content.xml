@@ -78,8 +78,6 @@
     <requires size='13'>
       <!--<required namespace='osgi.bundle' name='org.eclipse.equinox.common' range='3.12.0'/>-->
       <required namespace='osgi.bundle' name='org.eclipse.ui.workbench' range='0.0.0'/>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.11.100'/>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.4.0'/>
       <required namespace='osgi.bundle' name='org.eclipse.ui' range='0.0.0'/>
       <required namespace='osgi.bundle' name='org.eclipse.debug.core' range='0.0.0'/>
       <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>

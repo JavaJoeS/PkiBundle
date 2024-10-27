@@ -83,7 +83,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		noDefaultButton();
 		setPreferenceStore(AuthenticationPlugin.getDefault().getPreferenceStore());
 		setDescription("PKI Preferences:");
-		printoutStore();
+		//printoutStore();
 		//listProviders();
 		previousPKI = this.previousPKI();
 		pkiSecureStorage = new PKISecureStorage();
@@ -382,7 +382,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 								pkcs11Certificate.setStringValue( "pkcs11" );
 								
 						
-								System.out.println("PreferencePage SETTING certificate path for PKCS11 FIX THIS");
+								//System.out.println("PreferencePage SETTING certificate path for PKCS11 FIX THIS");
 								AuthenticationPlugin.getDefault().setCertificatePath("pkcs11");
 								
 								//System.out.println("PreferencePage SECURITYPROVIDER:"+ securityProvider.getStringValue());

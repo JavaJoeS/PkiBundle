@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.internal.Callback;
 import org.eclipse.core.pki.auth.ContextObservable;
+import org.eclipse.core.pki.auth.PublishPasswordUpdate;
 import org.eclipse.core.pki.util.LogUtil;
 import org.eclipse.core.pki.util.KeyStoreManager;
 import org.eclipse.core.pki.util.KeyStoreFormat;
@@ -47,11 +48,13 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	boolean uninitialzed = true;
 	boolean isReady = true;
 	ContextObservable observable = null;
+	PublishPasswordUpdate publisher = null;
 
-	public PkiPasswordDialog(Shell parent, ContextObservable ob) {
+	public PkiPasswordDialog(Shell parent, ContextObservable ob,PublishPasswordUpdate pwu ) {
 		super(parent);
 		observable = ob;
-		LogUtil.logWarning("PkiPasswordDialog CONSTRUCTOR");
+		publisher=pwu;
+		// LogUtil.logWarning("PkiPasswordDialog CONSTRUCTOR");
 		// Display.getDefault().asyncExec(this);
 		Display.getDefault().asyncExec(this); // main thread waits
 	}
@@ -59,7 +62,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	@Override
 	protected void okPressed() {
 		Optional keystoreContainer = null;
-		LogUtil.logWarning("PkiPasswordDialog OK pressed");
+		// LogUtil.logWarning("PkiPasswordDialog OK pressed");
 		String _passphrase = passwdField.getText();
 		// LogUtil.logWarning("PkiPasswordDialog OK pressed TEXT:"+_passphrase);
 		if (_passphrase == null || _passphrase.length() == 0) {
@@ -79,6 +82,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 			System.clearProperty("javax.net.ssl.keyStorePassword"); //$NON-NLS-1$
 			int returnCode = boxDialog.open();
 		} else {
+			publisher.publishMessage(pw);
 			observable.onchange(pw);
 			setReturnCode(OK);
 			super.okPressed();
@@ -89,22 +93,23 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 
 	@Override
 	protected void cancelPressed() {
-		LogUtil.logWarning("PkiPasswordDialog CANCEL pressed");
+		// LogUtil.logWarning("PkiPasswordDialog CANCEL pressed");
 		pw = null;
 		super.cancelPressed();
 		close();
 	}
-	
+
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		
+
 		Font font = new Font(shell.getDisplay(), new FontData("Arial", 25, SWT.BOLD));
 		shell.setFont(font);
 		shell.setText("PKCS12 PKI Password Input Field");
 
 		// LogUtil.logWarning("PkiPasswordDialog configureShell");
 	}
+
 	@Override
 	public void create() {
 		super.create();
@@ -120,7 +125,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	protected Control createDialogArea(Composite parent) {
 		// LogUtil.logWarning("PkiPasswordDialog createDialogArea");
 		initializeDialogUnits(parent);
-		//Composite main = new Composite(parent, SWT.NONE);
+		// Composite main = new Composite(parent, SWT.NONE);
 		Composite main = new Composite(parent, SWT.BORDER);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 5;
@@ -128,8 +133,8 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 		// main.setSize(800, 500);
 		main.setLayout(gridLayout);
 		main.setLayoutData(new GridData(GridData.FILL_BOTH));
-		//main.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		//main.pack();
+		// main.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		// main.pack();
 		setup(main);
 		Dialog.applyDialogFont(main);
 
@@ -139,19 +144,23 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 
 	public void run() {
 		// LogUtil.logWarning("PkiPasswordDialog run methid top");
-		if (uninitialzed) {
-			uninitialzed = false;
-			this.create();
-			shell = createShell();
-			shell.layout();
-			// configureShell(shell);
-			Control control = createDialogArea(getContents().getParent());
+		try {
+			if (uninitialzed) {
+				uninitialzed = false;
+				this.create();
+				shell = createShell();
+				shell.layout();
+				// configureShell(shell);
+				Control control = createDialogArea(getContents().getParent());
 
-			control.pack();
+				control.pack();
 
-			// LogUtil.logWarning("PkiPasswordDialog run methid NOW OPEN");
+				// LogUtil.logWarning("PkiPasswordDialog run methid NOW OPEN");
 
-			open();
+				open();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -165,17 +174,17 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 			isReady = false;
 			// LogUtil.logWarning("PkiPasswordDialog setup");
 
-			passwdField = new Text(parent,SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
+			passwdField = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
 			passwdField.setTextLimit(25);
 			Font font = new Font(parent.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 			passwdField.setFont(font);
-			
+
 			passwdField.setText("");
 			passwdField.setEchoChar('*');
 			GridData data = new GridData(GridData.BEGINNING, GridData.FILL, false, false);
 			data.widthHint = 130;
 			passwdField.setLayoutData(data);
-			
+
 			Button button = new Button(parent, SWT.PUSH);
 			button.setText("Show Password");
 
@@ -186,7 +195,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					LogUtil.logWarning("PkiPasswordDialog WIDGET pressed");
+					// LogUtil.logWarning("PkiPasswordDialog WIDGET pressed");
 					labelInfo.setText(passwdField.getText());
 					labelInfo.pack();
 				}

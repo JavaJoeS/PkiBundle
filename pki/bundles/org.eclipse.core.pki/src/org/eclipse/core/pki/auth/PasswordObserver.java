@@ -30,6 +30,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.Flow.Subscriber;
+import java.util.concurrent.Flow.Subscription;
+
+
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.spi.RegistryStrategy;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -43,17 +47,18 @@ import org.eclipse.core.pki.util.LogUtil;
 import org.eclipse.core.pki.util.ConfigureTrust;
 import org.eclipse.core.pki.util.KeyStoreManager;
 import org.eclipse.core.pki.util.KeyStoreFormat;
-
+import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 
 import org.eclipse.core.pki.pkiselection.PKIProperties;
 
 @SuppressWarnings("restriction")
-public class PasswordObserver implements Observer {
+public class PasswordObserver implements Observer, Subscriber {
 	static boolean isPkcs11Installed = false;
 	static boolean isKeyStoreLoaded = false;
 	PKIProperties pkiInstance = null;
 	Properties pkiProperties = null;
-	SSLContext sslContext = null;
+	//SSLContext sslContext = null;
+	private Subscription subscription;
 	protected static KeyStore keyStore = null;
 	private static final int DIGITAL_SIGNATURE = 0;
 	private static final int KEY_CERT_SIGN = 5;
@@ -69,5 +74,26 @@ public class PasswordObserver implements Observer {
 		System.setProperty("javax.net.ssl.keyStorePassword", pw); //$NON-NLS-1$
 		KeystoreSetup setup = new KeystoreSetup();
 		setup.installKeystore();
+	}
+	public void onSubscribe(Subscription subscription) {
+		// TODO Auto-generated method stub
+		this.subscription = subscription;
+		System.out.println("PasswordObserver onSubscribe");
+	}
+
+	public void onNext(Object item) {
+		// TODO Auto-generated method stub
+		System.out.println("PasswordObserver onNext");
+		SecurityOpRequest.INSTANCE.setConnected(true);
+	}
+
+	public void onError(Throwable throwable) {
+		// TODO Auto-generated method stub
+		System.out.println("PasswordObserver onError");
+	}
+
+	public void onComplete() {
+		// TODO Auto-generated method stub
+		System.out.println("PasswordObserver onComplete");
 	}
 }

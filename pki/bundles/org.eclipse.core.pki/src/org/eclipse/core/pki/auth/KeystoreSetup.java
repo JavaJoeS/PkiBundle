@@ -103,7 +103,7 @@ public class KeystoreSetup  {
 						LogUtil.logError("Invalid TrustManager Initialization.", null); //$NON-NLS-1$
 					} else {
 						SSLContext ctx = SSLContext.getInstance("TLS");//$NON-NLS-1$
-						ctx.init(km, tm, new SecureRandom());
+						ctx.init(km, tm, null);
 						SSLContext.setDefault(ctx);
 						HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
 						setSSLContext(ctx);
@@ -160,7 +160,7 @@ public class KeystoreSetup  {
 	public void setSSLContext(SSLContext context) {
 		this.sslContext = context;
 	}
-	private boolean isKeyStoreLoaded() {
+	public boolean isKeyStoreLoaded() {
 		return PKISetup.isKeyStoreLoaded;
 	}
 

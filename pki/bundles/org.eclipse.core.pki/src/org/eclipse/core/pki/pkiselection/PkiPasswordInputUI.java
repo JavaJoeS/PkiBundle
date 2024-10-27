@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.core.pki.pkiselection;
 
+import java.lang.reflect.*;
+import java.util.concurrent.Flow.Subscriber;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,6 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import org.eclipse.core.pki.auth.PublishPasswordUpdate;
 import org.eclipse.core.pki.auth.ContextObservable;
 import org.eclipse.core.pki.auth.PasswordObserver;
 import org.eclipse.core.pki.util.LogUtil;
@@ -38,8 +41,8 @@ public enum PkiPasswordInputUI {
 
 	public String get() {
 		// prompt for password
-		System.out.println("PkiPasswordInputUI get method running");
-		LogUtil.logWarning("PkiPasswordInputUI -  get method running"); //$NON-NLS-1$
+		//System.out.println("PkiPasswordInputUI get method running");
+		//LogUtil.logWarning("PkiPasswordInputUI -  get method running"); //$NON-NLS-1$
 		/*
 		 * Display.getDefault().asyncExec(new Runnable() {
 		 * 
@@ -49,15 +52,38 @@ public enum PkiPasswordInputUI {
 		 * dialog.getPW(); } } });
 		 */
 		//Display.getDefault().asyncExec(runner);
+		
+		
 		ContextObservable ob = new ContextObservable();
+		PublishPasswordUpdate up = PublishPasswordUpdate.getInstance();
+		
 		PasswordObserver observer = new PasswordObserver();
+		
+		try {
+			Class pubClass = Class.forName("org.eclipse.ecf.internal.ssl.ECFpwSubscriber"); //$NON-NLS-1$
+			Constructor constructor = pubClass.getDeclaredConstructor();
+			constructor.setAccessible(true);
+			Object obj = constructor.newInstance();
+			try {
+				Subscriber ecfSubscriber = (Subscriber) obj;
+				up.subscribe(ecfSubscriber);
+			} catch (Exception e) {
+				
+				LogUtil.logError("PkiPasswordInputUI - ECF Object Failed", e); //$NON-NLS-1$
+			}	
+			LogUtil.logInfo("PkiPasswordInputUI - Loaded ECF SUBSCRIBER."); //$NON-NLS-1$
+		} catch (Exception e) {
+			
+			LogUtil.logError("PkiPasswordInputUI - Cant get ECF:", e); //$NON-NLS-1$
+		}
+		up.subscribe(observer);
 		ob.addObserver(observer);
-		dialog=new PkiPasswordDialog(null, ob);	
+		dialog=new PkiPasswordDialog(null, ob, up);	
 		passwordString=dialog.getPW();
 		passwordString = "NOPASSWD";
 		return passwordString;
 	}
 	public void set(String pw) {
-		LogUtil.logWarning("PkiPasswordInputUI -  set method running"); //$NON-NLS-1$
+		//LogUtil.logWarning("PkiPasswordInputUI -  set method running"); //$NON-NLS-1$
 	}
 }
