@@ -147,7 +147,7 @@ public class PKISetup implements BundleActivator, IStartup {
 		// LogUtil.logInfo("PKISetup - now looking at incoming"); //$NON-NLS-1$
 		if (IncomingSystemProperty.SETTINGS.checkType()) {
 			if (IncomingSystemProperty.SETTINGS.checkKeyStore(pin)) {
-				KeystoreSetup setup = new KeystoreSetup();
+				KeystoreSetup setup = KeystoreSetup.getInstance();
 				if (PKIState.CONTROL.isPKCS12on()) {
 					
 					setup.installKeystore();

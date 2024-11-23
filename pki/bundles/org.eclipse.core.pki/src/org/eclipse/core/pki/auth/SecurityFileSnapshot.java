@@ -40,6 +40,7 @@ import org.eclipse.core.pki.util.NormalizeGCM;
 import org.eclipse.core.pki.util.SecureGCM;
 import org.eclipse.core.pki.util.TemplateForPKIfile;
 import org.eclipse.core.pki.pkiselection.PkiPasswordInputUI;
+import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 
 public enum SecurityFileSnapshot {
 	INSTANCE;
@@ -165,6 +166,9 @@ public enum SecurityFileSnapshot {
 					properties.save(os, null);
 					// After saving encrypted passwd to properties file, switch to unencrypted
 					properties.setProperty("javax.net.ssl.keyStorePassword", passwd); //$NON-NLS-1$
+					SecurityOpRequest.INSTANCE.setConnected(true);
+					PublishPasswordUpdate publisher = PublishPasswordUpdate.getInstance();
+					publisher.publishMessage(passwd);
 				} else {
 
 					// String ePasswd = properties.getProperty("javax.net.ssl.keyStorePassword");
