@@ -15,6 +15,7 @@ package org.eclipse.core.pki.auth;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.InputStream;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -40,6 +41,8 @@ import org.eclipse.core.pki.util.NormalizeGCM;
 import org.eclipse.core.pki.util.SecureGCM;
 import org.eclipse.core.pki.util.TemplateForPKIfile;
 import org.eclipse.core.pki.pkiselection.PkiPasswordInputUI;
+import org.eclipse.core.pki.pkiselection.PkiPasswordGrabberWidget;
+import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 
 public enum SecurityFileSnapshot {
 	INSTANCE;
@@ -124,31 +127,46 @@ public enum SecurityFileSnapshot {
 			FileChannel fileChannel = FileChannel.open(userDotEclipseHome, StandardOpenOption.READ);
 			FileChannel updateChannel = FileChannel.open(userDotEclipseHome, StandardOpenOption.WRITE);
 			FileLock lock = fileChannel.lock(0L, Long.MAX_VALUE, true);
-			properties.load(Channels.newInputStream(fileChannel));
+			InputStream fileInputStream = Channels.newInputStream(fileChannel);
+			properties.load(fileInputStream);
 			originalProperties.putAll(properties);
 			for (Entry<Object, Object> entry : properties.entrySet()) {
 				entry.setValue(entry.getValue().toString().trim());
 			}
+			
 			Optional<String> passwdContainer = Optional
 					.ofNullable(properties.getProperty("javax.net.ssl.keyStorePassword")); //$NON-NLS-1$
 			Optional<String> encryptedPasswd = Optional
 					.ofNullable(properties.getProperty("javax.net.ssl.encryptedPassword")); //$NON-NLS-1$
 			if (passwdContainer.isEmpty()) {
+				Optional keyStoreContainer = Optional.ofNullable(
+						properties.getProperty("javax.net.ssl.keyStore")); //$NON-NLS-1$
+				if (!(keyStoreContainer.isEmpty() )) {
+					System.setProperty("javax.net.ssl.keyStore", keyStoreContainer.get().toString().trim());
+				}
 				Optional keyStoreTypeContainer = Optional.ofNullable(
 						properties.getProperty("javax.net.ssl.keyStoreType")); //$NON-NLS-1$
 				if (!(keyStoreTypeContainer.isEmpty() )) {
-					String keyStoreType = keyStoreTypeContainer.get().toString();
-					if (keyStoreType.equalsIgnoreCase("PKCS12" )) {
+					String keyStoreType = keyStoreTypeContainer.get().toString().trim();
+					if (keyStoreType.equalsIgnoreCase("PKCS12" )) { //$NON-NLS-1$
+						System.setProperty("javax.net.ssl.keyStoreType", keyStoreType);//$NON-NLS-1$
 						// get the passwd from console
 						//PokeInConsole.PASSWD.get();
+						//String pw=PkiPasswordInputUI.DO.get();
+						try {
+							String pw=PkiPasswordGrabberWidget.INSTANCE.getInput();
 						
-						String pw=PkiPasswordInputUI.DO.get();
-						LogUtil.logWarning("SecurityFileSnapshot - BREAK for INPUT");
+							LogUtil.logWarning("SecurityFileSnapshot - PASSWORD HAS BEEN INPUT");//$NON-NLS-1$
 						
-						//System.out.println("SecurityFileSnapshot PASSWD:"+pw);
-						//System.setProperty("javax.net.ssl.keyStorePassword", pw);
+							//System.out.println("SecurityFileSnapshot PASSWD:"+pw);
+							System.setProperty("javax.net.ssl.keyStorePassword", pw);//$NON-NLS-1$
+						} catch(Exception xe) {
+							// User may have said cancel
+						}
+						
+						
 					} else {
-						System.setProperty("javax.net.ssl.keyStorePassword", "");
+						System.setProperty("javax.net.ssl.keyStorePassword", "");//$NON-NLS-1$
 					}
 				}
 			} else {
@@ -165,6 +183,9 @@ public enum SecurityFileSnapshot {
 					properties.save(os, null);
 					// After saving encrypted passwd to properties file, switch to unencrypted
 					properties.setProperty("javax.net.ssl.keyStorePassword", passwd); //$NON-NLS-1$
+					SecurityOpRequest.INSTANCE.setConnected(true);
+					PublishPasswordUpdate publisher = PublishPasswordUpdate.getInstance();
+					publisher.publishMessage(passwd);
 				} else {
 
 					// String ePasswd = properties.getProperty("javax.net.ssl.keyStorePassword");

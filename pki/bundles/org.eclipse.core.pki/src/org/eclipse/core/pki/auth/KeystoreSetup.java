@@ -57,8 +57,15 @@ public class KeystoreSetup  {
 	private static final int DIGITAL_SIGNATURE = 0;
 	private static final int KEY_CERT_SIGN = 5;
 	private static final int CRL_SIGN = 6;
+	private static KeystoreSetup INSTANCE;
 	public KeystoreSetup() {}
-
+	public static KeystoreSetup getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new KeystoreSetup();
+        }
+        
+        return INSTANCE;
+    }
 	public void installKeystore() {
 		Optional<KeyStore> keystoreContainer = null;
 		
@@ -154,7 +161,7 @@ public class KeystoreSetup  {
 		}
 	}
 	public SSLContext getSSLContext() {
-		return sslContext;
+		return INSTANCE.sslContext;
 	}
 
 	public void setSSLContext(SSLContext context) {

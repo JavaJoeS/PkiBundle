@@ -72,28 +72,24 @@ public class PasswordObserver implements Observer, Subscriber {
 		String pw = (String) arg;
 		//LogUtil.logWarning("PasswordObserver- BREAK for INPUT:"+pw);
 		System.setProperty("javax.net.ssl.keyStorePassword", pw); //$NON-NLS-1$
-		KeystoreSetup setup = new KeystoreSetup();
+		KeystoreSetup setup = KeystoreSetup.getInstance();
 		setup.installKeystore();
 	}
 	public void onSubscribe(Subscription subscription) {
 		// TODO Auto-generated method stub
 		this.subscription = subscription;
-		System.out.println("PasswordObserver onSubscribe");
 	}
 
 	public void onNext(Object item) {
 		// TODO Auto-generated method stub
-		System.out.println("PasswordObserver onNext");
 		SecurityOpRequest.INSTANCE.setConnected(true);
 	}
 
 	public void onError(Throwable throwable) {
 		// TODO Auto-generated method stub
-		System.out.println("PasswordObserver onError");
 	}
 
 	public void onComplete() {
 		// TODO Auto-generated method stub
-		System.out.println("PasswordObserver onComplete");
 	}
 }
