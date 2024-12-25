@@ -7,13 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
-		<tycho.version>4.0.7</tycho.version>
-
+		<tycho.version>4.0.8</tycho.version>
 		<top.dir>${maven.multiModuleProjectDirectory}</top.dir>
 		<!--<p2.repository>${top.dir}/updatesite/target/repository</p2.repository>-->
 		<tycho.buildqualifier.format>yyyyMMddHHmm</tycho.buildqualifier.format>
 		<maven.compiler.release>17</maven.compiler.release>
-		<eclipse-version>2024-06</eclipse-version>
+		<eclipse-version>2024-09</eclipse-version>
 		<eclipse.repo>https://download.eclipse.org/releases/${eclipse-version}</eclipse.repo>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
 		
@@ -170,9 +169,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
+	
 		<module>bundles</module>
 		<module>features</module>
 		<module>p2site</module>
+		
 	</modules>
 
 </project>
