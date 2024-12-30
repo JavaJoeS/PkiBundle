@@ -12,7 +12,6 @@
 	<!--<packaging>pom</packaging>-->
 	<packaging>eclipse-repository</packaging>
 	<properties>
-		<!--<repositoryLocation>${basedir}/target/repositoryFiles</repositoryLocation>-->
 		<repo.home>${basedir}/target/repositoryFiles/${buildQualifier}</repo.home>
 		<!--<repo.location>${basedir}/target/repository/${buildQualifier}</repo.location>-->
 		<repo.location>${basedir}/target/repository</repo.location>
