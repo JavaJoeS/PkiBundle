@@ -1,4 +1,4 @@
-package org.eclipse.pki.exception;
+package org.eclipse.core.pki.exception;
 
 public class UserCanceledException extends Exception {
 

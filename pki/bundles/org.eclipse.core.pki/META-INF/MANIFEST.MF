@@ -15,7 +15,7 @@ Export-Package: org.eclipse.core.pki;version="0.0.0",
  org.eclipse.core.pki.auth;version="0.0.0",
  org.eclipse.core.pki.pkiselection;version="0.0.0",
  org.eclipse.core.pki.util;version="0.0.0",
- org.eclipse.pki.exception;version="0.0.0"
+ org.eclipse.core.pki.exception;version="0.0.0"
 Import-Package: org.eclipse.core.internal.net,
  org.eclipse.core.net.proxy,
  org.eclipse.core.resources,

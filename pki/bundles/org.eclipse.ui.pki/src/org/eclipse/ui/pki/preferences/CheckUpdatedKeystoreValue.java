@@ -29,7 +29,7 @@ import org.eclipse.ui.pki.preferences.ChangedPressedFieldEditorStatus;
 import org.eclipse.core.pki.util.KeyStoreFormat;
 import org.eclipse.ui.pki.util.KeyStoreUtil;
 import org.eclipse.ui.pki.AuthenticationPlugin;
-import org.eclipse.pki.exception.UserCanceledException;
+import org.eclipse.core.pki.exception.UserCanceledException;
 
 
 public class CheckUpdatedKeystoreValue  {

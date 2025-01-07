@@ -11,7 +11,7 @@
  * Contributors:
  *     Eclipse Platform - initial API and implementation
  *******************************************************************************/
-package org.eclipse.pki.exception;
+package org.eclipse.core.pki.exception;
 
 public class CertificateDoesNotExistException extends
         InvalidPkcs12StreamException {
