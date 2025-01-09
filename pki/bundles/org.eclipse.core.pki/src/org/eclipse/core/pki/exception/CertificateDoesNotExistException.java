@@ -1,3 +1,4 @@
+package org.eclipse.core.pki.exception;
 /*******************************************************************************
  * Copyright (c) 2023 Eclipse Platform, Security Group and others.
  *
@@ -11,14 +12,14 @@
  * Contributors:
  *     Eclipse Platform - initial API and implementation
  *******************************************************************************/
-package org.eclipse.core.pki.exception;
 
-public class CertificateDoesNotExistException extends
-        InvalidPkcs12StreamException {
+
+public class CertificateDoesNotExistException extends InvalidPkcs12StreamException {
 
     private static final long serialVersionUID = -2415838781812652429L;
 
     public CertificateDoesNotExistException() {
+		super();
     }
 
     public CertificateDoesNotExistException( String arg0 ) {
@@ -32,5 +33,4 @@ public class CertificateDoesNotExistException extends
     public CertificateDoesNotExistException( String arg0, Throwable arg1 ) {
         super( arg0, arg1 );
     }
-
 }

@@ -34,9 +34,9 @@ import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.pki.exception.InvalidPkcs12StreamException;
-import org.eclipse.pki.exception.NonDigitalSignatureCertificateException;
-import org.eclipse.pki.exception.WrongPasswordException;
+import org.eclipse.core.pki.exception.InvalidPkcs12StreamException;
+import org.eclipse.core.pki.exception.NonDigitalSignatureCertificateException;
+import org.eclipse.core.pki.exception.WrongPasswordException;
 
  
 /**

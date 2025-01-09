@@ -50,7 +50,7 @@ import org.eclipse.ui.pki.pkiselection.PKCSSelected;
 //import org.eclipse.ui.pki.pkiselection.PKCSpick;
 import org.eclipse.core.pki.util.KeyStoreFormat;
 import org.eclipse.ui.pki.wizard.TrustStoreSecureStorage;
-import org.eclipse.pki.exception.UserCanceledException;
+import org.eclipse.core.pki.exception.UserCanceledException;
 import org.eclipse.ui.pki.preferences.AuthenticationPreferences;
 import org.eclipse.ui.pki.util.PKISecureStorage;
 
