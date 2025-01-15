@@ -51,19 +51,10 @@ public enum PkiPasswordGrabberWidget {
 		panel.add(blankie);
 		panel.add(pword);
 		try {
-			// imageDescriptor =
-			// PlatformUI.getWorkbench().getSharedImages().getImageDescriptor("PASSWD_LOCK_ID");
-			// icon =
-			// PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
-			System.out.println("PkiPasswordGrabberWidget NAMEE GETTTM");
-			IConfigurationElement[] elements = Platform.getExtensionRegistry()
-					.getConfigurationElementsFor("org.eclipse.core.pki.id");
-			for (IConfigurationElement element : elements) {
-				System.out.println("PkiPasswordGrabberWidget NAMEE:" + element.getName());
-			}
-			icon = new ImageIcon("/icons/icons8-password-48.png");
+			
+			icon = new ImageIcon(getClass().getResource("/icons/icons8-password-48.png"));
 		} catch (Exception iconErr) {
-			iconErr.printStackTrace();
+			//iconErr.printStackTrace();
 		}
 
 		panel.requestFocus();

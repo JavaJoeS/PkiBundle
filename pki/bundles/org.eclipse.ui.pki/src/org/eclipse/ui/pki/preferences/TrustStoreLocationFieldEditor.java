@@ -20,7 +20,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.pki.preferences.ChangedPressedFieldEditorStatus;
 import org.eclipse.ui.pki.AuthenticationPlugin;
-import org.eclipse.pki.exception.UserCanceledException;
+import org.eclipse.core.pki.exception.UserCanceledException;
 
 /**
  * This class can be used in an {@link FieldEditorPreferencePage} to represent a trust store
