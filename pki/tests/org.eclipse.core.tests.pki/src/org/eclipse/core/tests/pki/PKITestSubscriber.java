@@ -18,7 +18,7 @@ import java.util.concurrent.Flow.Subscription;
 
 import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 
-public class PKITestSubscriber extends SwingTestUnit implements Subscriber {
+public class PKITestSubscriber implements Subscriber {
 	private Subscription subscription;
 	private String name;
 	//private SSLContext sslContext;

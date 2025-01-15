@@ -47,7 +47,6 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		//super.start(context);
 		Activator.context = context;
-		//System.out.println(" Activator HELLO TEST start bundle");
 		new MainTest();
 	}
 

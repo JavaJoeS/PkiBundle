@@ -13,25 +13,34 @@
  *******************************************************************************/
 package org.eclipse.core.pki.pkiselection;
 
+import java.util.Optional;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
-import java.util.Optional;
 
 import org.eclipse.core.pki.auth.PublishPasswordUpdate;
-import org.eclipse.core.pki.util.LogUtil;
-import org.eclipse.core.pki.util.KeyStoreManager;
 import org.eclipse.core.pki.util.KeyStoreFormat;
+import org.eclipse.core.pki.util.KeyStoreManager;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 
 public enum PkiPasswordGrabberWidget {
 	INSTANCE;
 	JFrame frame = null;
+	Icon icon = null;
+
 	JPasswordField pword = null;
+
 	public String getInput() {
-		PublishPasswordUpdate publisher = PublishPasswordUpdate.getInstance();
+
+		//PublishPasswordUpdateImpl publisher = PublishPasswordUpdateImpl.getInstance();
+
 		Optional keystoreContainer = null;
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("Enter Password:");
@@ -41,36 +50,51 @@ public enum PkiPasswordGrabberWidget {
 		panel.add(label);
 		panel.add(blankie);
 		panel.add(pword);
-		
+		try {
+			// imageDescriptor =
+			// PlatformUI.getWorkbench().getSharedImages().getImageDescriptor("PASSWD_LOCK_ID");
+			// icon =
+			// PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
+			System.out.println("PkiPasswordGrabberWidget NAMEE GETTTM");
+			IConfigurationElement[] elements = Platform.getExtensionRegistry()
+					.getConfigurationElementsFor("org.eclipse.core.pki.id");
+			for (IConfigurationElement element : elements) {
+				System.out.println("PkiPasswordGrabberWidget NAMEE:" + element.getName());
+			}
+			icon = new ImageIcon("/icons/icons8-password-48.png");
+		} catch (Exception iconErr) {
+			iconErr.printStackTrace();
+		}
+
 		panel.requestFocus();
 		char[] password = null;
 		while (true) {
 			String[] options = new String[] {"cancel", "submit"};
-			
-			//showOptionDialog(Component parentComponent, 
-			//		Object message, String title, int optionType, 
-			//		int messageType, Icon icon, Object[] options, 
+
+			//showOptionDialog(Component parentComponent,
+			//		Object message, String title, int optionType,
+			//		int messageType, Icon icon, Object[] options,
 			//		Object initialValue)
-			
+
 			int option = JOptionPane.showOptionDialog(null, panel, "Eclipse PKI Password/PiN Entry",
 	                JOptionPane.INFORMATION_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-	                null, options, options[1]);
-			
+					icon, options, options[1]);
+
 			//System.out.println("Your ENTRY OPTION is: " + option);
-			
+
 			if (option == 0) {
 				//System.out.println("PkiPasswordGrabberWidget CANCEL value NO_OPTION ");
 				JOptionPane.showMessageDialog(null,"CANCELED",null,
                         JOptionPane.ERROR_MESSAGE);
-				
+
 				break;
 			} else if(option == 1) {
 				password = pword.getPassword();
 				pw=new String(password);
 				//System.out.println("Your password is: " + new String(password));
-					
+
 				System.setProperty("javax.net.ssl.keyStorePassword", pw); //$NON-NLS-1$
-				
+
 				keystoreContainer = Optional
 						.ofNullable(KeyStoreManager.INSTANCE.getKeyStore(System.getProperty("javax.net.ssl.keyStore"), //$NON-NLS-1$
 								System.getProperty("javax.net.ssl.keyStorePassword"), //$NON-NLS-1$
@@ -82,14 +106,14 @@ public enum PkiPasswordGrabberWidget {
 					pword.setText("");
 				} else {
 					//System.out.println("Your password is GOOD");
-					publisher.publishMessage(pw);
+					PublishPasswordUpdate.INSTANCE.publishMessage(pw);
 					break;
 				}
 			} else {
 				System.out.println("wtf");
 				break;
 			}
-			
+
 		}
 		return pw;
 	}

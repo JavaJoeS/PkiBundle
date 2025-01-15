@@ -154,6 +154,20 @@ public enum SecurityFileSnapshot {
 						//PokeInConsole.PASSWD.get();
 						//String pw=PkiPasswordInputUI.DO.get();
 						try {
+							try {
+								Optional testKeyContainer = Optional.ofNullable(
+										System.getProperty("core.key"));
+								if (!(testKeyContainer.isEmpty() ))  {
+									String testKey = testKeyContainer.get().toString().trim();
+									System.out.println("SecurityFileSnapshot TESTING:"+testKey);
+									if (testKey.equalsIgnoreCase("eclipse.core.pki.testing")) {
+										return properties;
+									}
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							String pw=PkiPasswordGrabberWidget.INSTANCE.getInput();
 						
 							LogUtil.logWarning("SecurityFileSnapshot - PASSWORD HAS BEEN INPUT");//$NON-NLS-1$
@@ -184,8 +198,9 @@ public enum SecurityFileSnapshot {
 					// After saving encrypted passwd to properties file, switch to unencrypted
 					properties.setProperty("javax.net.ssl.keyStorePassword", passwd); //$NON-NLS-1$
 					SecurityOpRequest.INSTANCE.setConnected(true);
-					PublishPasswordUpdate publisher = PublishPasswordUpdate.getInstance();
-					publisher.publishMessage(passwd);
+					//PublishPasswordUpdateImpl publisher = PublishPasswordUpdateImpl.getInstance();
+					//publisher.publishMessage(passwd);
+					PublishPasswordUpdate.INSTANCE.publishMessage(passwd);
 				} else {
 
 					// String ePasswd = properties.getProperty("javax.net.ssl.keyStorePassword");

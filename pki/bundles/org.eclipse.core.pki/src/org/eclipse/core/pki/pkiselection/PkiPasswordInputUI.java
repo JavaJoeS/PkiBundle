@@ -55,7 +55,7 @@ public enum PkiPasswordInputUI {
 		
 		
 		ContextObservable ob = new ContextObservable();
-		PublishPasswordUpdate up = PublishPasswordUpdate.getInstance();
+		//PublishPasswordUpdateImpl up = PublishPasswordUpdateImpl.getInstance();
 		
 		PasswordObserver observer = new PasswordObserver();
 		
@@ -66,7 +66,7 @@ public enum PkiPasswordInputUI {
 			Object obj = constructor.newInstance();
 			try {
 				Subscriber ecfSubscriber = (Subscriber) obj;
-				up.subscribe(ecfSubscriber);
+				PublishPasswordUpdate.INSTANCE.subscribe(ecfSubscriber);
 			} catch (Exception e) {
 				
 				LogUtil.logError("PkiPasswordInputUI - ECF Object Failed", e); //$NON-NLS-1$
@@ -76,9 +76,10 @@ public enum PkiPasswordInputUI {
 			
 			LogUtil.logError("PkiPasswordInputUI - Cant get ECF:", e); //$NON-NLS-1$
 		}
-		up.subscribe(observer);
+		PublishPasswordUpdate.INSTANCE.subscribe(observer);
 		ob.addObserver(observer);
-		dialog=new PkiPasswordDialog(null, ob, up);	
+		//dialog=new PkiPasswordDialog(null, ob, PublishPasswordUpdate);
+		dialog=new PkiPasswordDialog(null, ob);
 		passwordString=dialog.getPW();
 		passwordString = "NOPASSWD";
 		return passwordString;

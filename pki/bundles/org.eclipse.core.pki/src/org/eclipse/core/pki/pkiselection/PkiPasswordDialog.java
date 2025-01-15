@@ -48,12 +48,13 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	boolean uninitialzed = true;
 	boolean isReady = true;
 	ContextObservable observable = null;
-	PublishPasswordUpdate publisher = null;
+	//PublishPasswordUpdateImpl publisher = null;
 
-	public PkiPasswordDialog(Shell parent, ContextObservable ob,PublishPasswordUpdate pwu ) {
+	//public PkiPasswordDialog(Shell parent, ContextObservable ob,PublishPasswordUpdate pwu ) {
+	public PkiPasswordDialog(Shell parent, ContextObservable ob) {
 		super(parent);
 		observable = ob;
-		publisher=pwu;
+		//publisher=pwu;
 		// LogUtil.logWarning("PkiPasswordDialog CONSTRUCTOR");
 		// Display.getDefault().asyncExec(this);
 		Display.getDefault().asyncExec(this); // main thread waits
@@ -82,7 +83,7 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 			System.clearProperty("javax.net.ssl.keyStorePassword"); //$NON-NLS-1$
 			int returnCode = boxDialog.open();
 		} else {
-			publisher.publishMessage(pw);
+			PublishPasswordUpdate.INSTANCE.publishMessage(pw);
 			observable.onchange(pw);
 			setReturnCode(OK);
 			super.okPressed();
