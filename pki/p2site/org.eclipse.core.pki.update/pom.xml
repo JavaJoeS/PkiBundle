@@ -23,6 +23,7 @@
 		<local.uuid>${project.build.uuid}</local.uuid>
 		<local.p2.timestamp>${timestamp}</local.p2.timestamp>
 		<update.id>org.eclipse.core.pki.update-1.0.0-SNAPSHOT</update.id>
+<!--		<revision>${revisionSnapshot}</revision>-->
 	</properties>
 	<build>
 		<plugins>

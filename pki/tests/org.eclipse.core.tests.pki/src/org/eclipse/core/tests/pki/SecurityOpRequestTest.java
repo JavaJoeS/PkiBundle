@@ -60,43 +60,27 @@ import org.eclipse.core.pki.auth.SecurityFileSnapshot;
 import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 import org.eclipse.core.pki.pkiselection.PkiPasswordGrabberWidget;
 import org.eclipse.core.pki.pkiselection.PKI;
-
+import org.eclipse.core.pki.auth.PKISetup;
 import org.eclipse.core.pki.auth.PKIState;
-
+import org.eclipse.core.pki.auth.Proxies;
 
 
 //@RunWith(PowerMockRunner.class)
-public class MainTest {
+public class SecurityOpRequestTest {
 	Properties properties = new Properties();
 	Object o = new Object();
 	String testName = "PKItestSubscriber";
 	PKITestSubscriber subscriber = null;
 	PublicKeySecurity publicKeySecurityMock = null;
+	SecurityOpRequest securityOpRequestMock = null;
 	
 	
-	SecurityFileSnapshot securityFileSnapshotMock = null;
-	PkiPasswordGrabberWidget pkiPasswordGrabberWidgetMock = null;
-	PKI pkiMock = null;
-	
-	PKIState pkiStateMock = null;
-	
-	public MainTest() {
-		System.out.println("Constructor MainTest");
-	}
+	public SecurityOpRequestTest() {}
 	
 	@Before
 	public void Initialize() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		
-		publicKeySecurityMock = mock(PublicKeySecurity.class);
-		
-		
-		securityFileSnapshotMock = mock(SecurityFileSnapshot.class);
-		pkiPasswordGrabberWidgetMock = mock(PkiPasswordGrabberWidget.class);
-		
-		pkiMock = mock(PKI.class);
-		pkiStateMock = mock(PKIState.class);
-		
+		securityOpRequestMock = mock(SecurityOpRequest.class);	
 	}
 
 	@Test
@@ -105,14 +89,11 @@ public class MainTest {
 		
 	}
 	@Test
-	public void testSecurityFileSnapshot() {
-		when(securityFileSnapshotMock.image()).thenReturn(true);
-		when(securityFileSnapshotMock.createPKI()).thenReturn(true);
-		when(securityFileSnapshotMock.load(isA(String.class),  isA(String.class))).thenReturn(properties);
-		doNothing().when(securityFileSnapshotMock).restoreProperties();
-	}
-	@Test
-	public void testPkiPasswordGrabberWidget() {
-		when(pkiPasswordGrabberWidgetMock.getInput()).thenReturn("testPassword");
+	public void testSecurityOp() {
+		when(securityOpRequestMock.getConnected()).thenReturn(true);
+		doNothing().when(securityOpRequestMock).setConnected(false);
+		boolean testResult = securityOpRequestMock.getConnected();
+		assertTrue(testResult);
+		securityOpRequestMock.setConnected(true);	
 	}
 }

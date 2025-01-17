@@ -54,65 +54,38 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.eclipse.core.pki.auth.PublishPasswordUpdate;
-import org.eclipse.core.pki.auth.PublishPasswordUpdateIfc;
-import org.eclipse.core.pki.auth.PublicKeySecurity;
-import org.eclipse.core.pki.auth.SecurityFileSnapshot;
-import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
-import org.eclipse.core.pki.pkiselection.PkiPasswordGrabberWidget;
-import org.eclipse.core.pki.pkiselection.PKI;
-
-import org.eclipse.core.pki.auth.PKIState;
-
 
 
 //@RunWith(PowerMockRunner.class)
-public class MainTest {
+public class PublishPasswordUpdateTest {
 	Properties properties = new Properties();
 	Object o = new Object();
 	String testName = "PKItestSubscriber";
 	PKITestSubscriber subscriber = null;
-	PublicKeySecurity publicKeySecurityMock = null;
+	PublishPasswordUpdate publishPasswordUpdateMock = null;
 	
 	
-	SecurityFileSnapshot securityFileSnapshotMock = null;
-	PkiPasswordGrabberWidget pkiPasswordGrabberWidgetMock = null;
-	PKI pkiMock = null;
-	
-	PKIState pkiStateMock = null;
-	
-	public MainTest() {
-		System.out.println("Constructor MainTest");
-	}
+	public PublishPasswordUpdateTest() {}
 	
 	@Before
 	public void Initialize() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		
-		publicKeySecurityMock = mock(PublicKeySecurity.class);
-		
-		
-		securityFileSnapshotMock = mock(SecurityFileSnapshot.class);
-		pkiPasswordGrabberWidgetMock = mock(PkiPasswordGrabberWidget.class);
-		
-		pkiMock = mock(PKI.class);
-		pkiStateMock = mock(PKIState.class);
-		
+		MockitoAnnotations.initMocks(this);	
+		subscriber = new PKITestSubscriber(testName);
+		publishPasswordUpdateMock = mock(PublishPasswordUpdate.class);
 	}
 
 	@Test
 	public void testRun() {
 		Object o = new Object();
-		
+		assertEquals(this.testName, subscriber.getName(), "The name should be set correctly.");
+		assertNotEquals("footest", subscriber.getName(), "The name should be set correctly.");
 	}
+	
 	@Test
-	public void testSecurityFileSnapshot() {
-		when(securityFileSnapshotMock.image()).thenReturn(true);
-		when(securityFileSnapshotMock.createPKI()).thenReturn(true);
-		when(securityFileSnapshotMock.load(isA(String.class),  isA(String.class))).thenReturn(properties);
-		doNothing().when(securityFileSnapshotMock).restoreProperties();
-	}
-	@Test
-	public void testPkiPasswordGrabberWidget() {
-		when(pkiPasswordGrabberWidgetMock.getInput()).thenReturn("testPassword");
+	public void testPublishPasswordUpdate() {
+		doNothing().when(publishPasswordUpdateMock).subscribe(subscriber);
+		when(publishPasswordUpdateMock.getSubscriberCount()).thenReturn(1);
+		doNothing().when(publishPasswordUpdateMock).publishMessage(isA(String.class));
+		doNothing().when(publishPasswordUpdateMock).close();	
 	}
 }
