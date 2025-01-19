@@ -215,9 +215,11 @@
 	<profiles>
 		<profile>
 			<id>default-snapshot</id>
+			<!--
 			<modules>
 				<module>p2site</module>
 			</modules>
+			-->
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
