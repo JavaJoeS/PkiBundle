@@ -7,6 +7,7 @@
   </parent>
   <groupId>org.eclipse.core.pki.product</groupId>
   <artifactId>org.eclipse.core.pki.product</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   
   
   <build>
