@@ -70,9 +70,6 @@ public class MainTest {
 	Properties properties = new Properties();
 	Object o = new Object();
 	String testName = "PKItestSubscriber";
-	PKITestSubscriber subscriber = null;
-	PublicKeySecurity publicKeySecurityMock = null;
-	
 	
 	SecurityFileSnapshot securityFileSnapshotMock = null;
 	PkiPasswordGrabberWidget pkiPasswordGrabberWidgetMock = null;
@@ -88,7 +85,6 @@ public class MainTest {
 	public void Initialize() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		
-		publicKeySecurityMock = mock(PublicKeySecurity.class);
 		
 		
 		securityFileSnapshotMock = mock(SecurityFileSnapshot.class);
