@@ -1,7 +1,5 @@
-package org.eclipse.core.tests.pki;
-
 /*******************************************************************************
- * Copyright (c) 2024 IBM Corporation and others.
+ * Copyright (c) 2025 IBM Corporation and others.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -13,9 +11,10 @@ package org.eclipse.core.tests.pki;
  * Contributors:
  * IBM Corporation - initial API and implementation
  *******************************************************************************/
-//import org.eclipse.core.pki.PKISetup;
+package org.eclipse.core.tests.pki.auth;
+
+
 import java.util.Properties;
-import java.util.concurrent.Flow.Subscriber;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -53,32 +52,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
+import org.eclipse.core.pki.auth.PublicKeySecurity;
 
-//@RunWith(PowerMockRunner.class)
-public class SecurityOpRequestTest {
-	SecurityOpRequest securityOpRequestMock = null;
+public class PublicKeySecurityTest {
+	PublicKeySecurity publicKeySecurityMock = null;
+	Properties properties = new Properties();
+	String PiN = "12345679";
+	public PublicKeySecurityTest() {}
 	
-	
-	public SecurityOpRequestTest() {}
 	
 	@Before
 	public void Initialize() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		securityOpRequestMock = mock(SecurityOpRequest.class);	
+		publicKeySecurityMock = mock(PublicKeySecurity.class);
+	}
+	
+	@Test
+	public void testGetpkiPropertyFile() {
+		when(publicKeySecurityMock.getPkiPropertyFile(PiN)).thenReturn(properties);
 	}
 
-	@Test
-	public void testRun() {
-		Object o = new Object();
-		
-	}
-	@Test
-	public void testSecurityOp() {
-		when(securityOpRequestMock.getConnected()).thenReturn(true);
-		doNothing().when(securityOpRequestMock).setConnected(false);
-		boolean testResult = securityOpRequestMock.getConnected();
-		assertTrue(testResult);
-		securityOpRequestMock.setConnected(true);	
-	}
 }

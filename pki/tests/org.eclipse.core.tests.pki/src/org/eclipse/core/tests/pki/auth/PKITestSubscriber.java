@@ -1,4 +1,4 @@
-package org.eclipse.core.tests.pki;
+package org.eclipse.core.tests.pki.auth;
 /*******************************************************************************
  * Copyright (c) 2024 IBM Corporation and others.
  *

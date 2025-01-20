@@ -55,5 +55,35 @@ public class IncomingSystemPropertyTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void testCheckKeyStore() {
+		try {
+			boolean result = incomingSystemPropertyMock.checkKeyStore("PiN");
+			assertFalse(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testCheckTrustStoreType() {
+		try {
+			boolean result = incomingSystemPropertyMock.checkTrustStoreType();
+			assertFalse(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testCheckTrustStore() {
+		try {
+			boolean result = incomingSystemPropertyMock.checkTrustStore();
+			assertFalse(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
