@@ -40,7 +40,6 @@ import org.eclipse.core.pki.util.LogUtil;
 import org.eclipse.core.pki.util.NormalizeGCM;
 import org.eclipse.core.pki.util.SecureGCM;
 import org.eclipse.core.pki.util.TemplateForPKIfile;
-import org.eclipse.core.pki.pkiselection.PkiPasswordInputUI;
 import org.eclipse.core.pki.pkiselection.PkiPasswordGrabberWidget;
 import org.eclipse.core.pki.pkiselection.SecurityOpRequest;
 
@@ -151,8 +150,7 @@ public enum SecurityFileSnapshot {
 					if (keyStoreType.equalsIgnoreCase("PKCS12" )) { //$NON-NLS-1$
 						System.setProperty("javax.net.ssl.keyStoreType", keyStoreType);//$NON-NLS-1$
 						// get the passwd from console
-						//PokeInConsole.PASSWD.get();
-						//String pw=PkiPasswordInputUI.DO.get();
+						
 						try {
 							try {
 								Optional testKeyContainer = Optional.ofNullable(
