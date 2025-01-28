@@ -14,30 +14,28 @@
 package org.eclipse.core.pki.pkiselection;
 
 import java.util.Optional;
+
+import org.eclipse.core.pki.auth.PublishPasswordUpdate;
+import org.eclipse.core.pki.util.KeyStoreFormat;
+import org.eclipse.core.pki.util.KeyStoreManager;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.widgets.MessageBox;
-//import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.internal.Callback;
-import org.eclipse.core.pki.auth.ContextObservable;
-import org.eclipse.core.pki.auth.PublishPasswordUpdate;
-import org.eclipse.core.pki.util.LogUtil;
-import org.eclipse.core.pki.util.KeyStoreManager;
-import org.eclipse.core.pki.util.KeyStoreFormat;
+import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class PkiPasswordDialog extends Dialog implements Runnable {
 
@@ -47,16 +45,9 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 	protected String pw = null;
 	boolean uninitialzed = true;
 	boolean isReady = true;
-	ContextObservable observable = null;
-	//PublishPasswordUpdateImpl publisher = null;
 
-	//public PkiPasswordDialog(Shell parent, ContextObservable ob,PublishPasswordUpdate pwu ) {
-	public PkiPasswordDialog(Shell parent, ContextObservable ob) {
+	public PkiPasswordDialog(Shell parent) {
 		super(parent);
-		observable = ob;
-		//publisher=pwu;
-		// LogUtil.logWarning("PkiPasswordDialog CONSTRUCTOR");
-		// Display.getDefault().asyncExec(this);
 		Display.getDefault().asyncExec(this); // main thread waits
 	}
 
@@ -84,7 +75,6 @@ public class PkiPasswordDialog extends Dialog implements Runnable {
 			int returnCode = boxDialog.open();
 		} else {
 			PublishPasswordUpdate.INSTANCE.publishMessage(pw);
-			observable.onchange(pw);
 			setReturnCode(OK);
 			super.okPressed();
 
